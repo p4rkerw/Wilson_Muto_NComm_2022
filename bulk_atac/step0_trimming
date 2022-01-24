@@ -1,0 +1,1 @@
+trim_galore --paired Prim_ATAC_rep1_R1.fastq.gz Prim_ATAC_rep1_R2.fastq.gz

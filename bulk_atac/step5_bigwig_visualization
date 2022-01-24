@@ -1,0 +1,14 @@
+#!/bin/bash
+
+bamCoverage -b Prim_ATAC_rep1_data.bam -o Prim_ATAC_rep1.bw
+bamCoverage -b Prim_ATAC_rep2_data.bam -o Prim_ATAC_rep2.bw
+
+#merge
+samtools merge Prim_ATAC_merged_presort.bam  Prim_ATAC_rep1_data.bam Prim_ATAC_rep2_data.bam
+
+#sort and index
+samtools sort -@ 8  Prim_ATAC_merged_presort.bam > Prim_ATAC_merged.bam
+samtools index -@ 8 Prim_ATAC_merged.bam
+
+#bam to bigwig
+bamCoverage -b Prim_ATAC_merged.bam -o Prim_ATAC_merged.bw

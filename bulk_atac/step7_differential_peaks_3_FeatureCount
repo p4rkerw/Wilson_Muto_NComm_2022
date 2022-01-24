@@ -1,0 +1,11 @@
+
+awk 'OFS="\t" {print $1"."$2+1"."$3, $1, $2+1, $3, "."}' merged_peaks.narrowPeak > merged_peaks.saf
+
+featureCounts -a merged_narrow_peaks.saf -F SAF -T 8  -p -o hTERT_ATAC_rep1.peaks_countMatrix.txt hTERT_ATAC_rep1_rdp_sorted.bam
+
+featureCounts -a merged_narrow_peaks.saf -F SAF -T 8  -p -o hTERT_ATAC_rep2.peaks_countMatrix.txt hTERT_ATAC_rep2_rdp_sorted.bam
+
+
+featureCounts -a merged_narrow_peaks.saf -F SAF -T 8  -p -o Prim_ATAC_rep1.peaks_countMatrix.txt Prim_ATAC_rep1_rdp_sorted.bam
+
+featureCounts -a merged_narrow_peaks.saf -F SAF -T 8  -p -o Prim_ATAC_rep2.peaks_countMatrix.txt Prim_ATAC_rep2_rdp_sorted.bam

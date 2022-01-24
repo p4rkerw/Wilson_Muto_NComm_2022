@@ -1,0 +1,18 @@
+#PBS -m be
+#PBS -l nodes=1:ppn=2,mem=32gb,walltime=1:30:00
+
+#Change directory
+cd /scratch/ymuto802
+
+#Loading required modules
+module load samtools
+
+samtools merge merged.bam Prim_ATAC_rep1_rdp.bam Prim_ATAC_rep2_rdp.bam hTERT_ATAC_rep1_rdp.bam hTERT_ATAC_rep2_rdp.bam
+
+
+samtools sort -@ 2  merged.bam> merged_sort.bam
+
+samtools index -@ 2 merged_sort.bam
+
+#Exiting the server
+exit

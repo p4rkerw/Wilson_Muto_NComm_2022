@@ -1,0 +1,5 @@
+macs2 callpeak -t Prim_ATAC_rep1_data.bam --nomodel --shift -100 --extsize 200 -g hs -n Prim_ATAC_rep1
+macs2 callpeak -t Prirm_ATAC_rep2_data.bam --nomodel --shift -100 --extsize 200 -g hs -n Prim_ATAC_rep2
+
+#generate consensus peak list from replicates
+bedtools intersect -a Prim_ATAC_rep1_peaks.narrowPeak -b Prim_ATAC_rep2_peaks.narrowPeak > Prim_ATAC_consensus.bed

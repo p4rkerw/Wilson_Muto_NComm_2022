@@ -1,0 +1,52 @@
+library(ChIPseeker)
+library(TxDb.Hsapiens.UCSC.hg38.knownGene)
+txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
+library(clusterProfiler)
+library(org.Hs.eg.db)
+
+files <- list("Primary.narrowPeak",
+ "/hTERT.narrowPeak")
+
+names(files) <- c("Primary","hTERT")
+
+promoter <- getPromoters(TxDb=txdb, upstream=3000, downstream=3000)
+
+tagMatrixList <- lapply(files, getTagMatrix, windows=promoter)
+
+plotAvgProf(tagMatrixList, xlim=c(-3000, 3000))
+tagHeatmap(tagMatrixList, xlim=c(-3000, 3000), color=NULL) #800x1600
+
+peakAnnoList <- lapply(files, annotatePeak, TxDb=txdb,
+                       tssRegion=c(-3000, 3000), verbose=FALSE) 
+
+plotAnnoBar(peakAnnoList) #800x400
+
+genes = lapply(peakAnnoList, function(i) as.data.frame(i)$geneId)
+names(genes) = sub("_", "\n", names(genes))
+compKEGG <- compareCluster(geneCluster   = genes,
+                           fun           = "enrichKEGG",
+                           pvalueCutoff  = 0.0005,
+                           pAdjustMethod = "BH")
+dotplot(compKEGG, showCategory = 33, title = "KEGG Pathway Enrichment Analysis")
+
+genes= lapply(peakAnnoList, function(i) as.data.frame(i)$geneId)
+vennplot(genes)
+
+library(ReactomePA)
+
+peak <- readPeakFile(files[[1]])
+#pathway1 <- enrichPathway(as.data.frame(peakAnno)$geneId)
+#head(pathway1, 2)
+gene <- seq2gene(peak, tssRegion = c(-1000, 1000), flankDistance = 3000, TxDb=txdb)
+pathway2 <- enrichPathway(gene)
+head(pathway2, 2)
+dotplot(pathway2)
+
+peak <- readPeakFile(files[[2]])
+#pathway1 <- enrichPathway(as.data.frame(peakAnno)$geneId)
+#head(pathway1, 2)
+gene <- seq2gene(peak, tssRegion = c(-1000, 1000), flankDistance = 3000, TxDb=txdb)
+pathway2 <- enrichPathway(gene)
+head(pathway2, 2)
+dotplot(pathway2) #700x500
+

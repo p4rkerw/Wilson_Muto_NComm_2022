@@ -1,0 +1,7 @@
+#remove PCR duplicates
+java -jar /home/users/ymuto/picard.jar MarkDuplicates INPUT=Prim_ATAC_rep1.bam OUTPUT=Prim_ATAC_rep1_rdp.bam M=Prim_ATAC_rep1_rdp.txt VALIDATION_STRINGENCY=LENIENT REMOVE_DUPLICATES=true
+
+#sort and index
+samtools sort -@ 8  Prim_ATAC_rep1_rdp.bam > Prim_ATAC_rep1_data.bam
+samtools index -@ 8 Prim_ATAC_rep1_data.bam
+

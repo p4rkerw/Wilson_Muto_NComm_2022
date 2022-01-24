@@ -1,0 +1,12 @@
+library_id,molecule_h5,diabetes
+Control_1,cellranger_rna_counts_dir/Control_1/outs/molecule_info.h5,0
+Control_2,cellranger_rna_counts_dir/Control_2/outs/molecule_info.h5,0
+Control_3,cellranger_rna_counts_dir/Control_3/outs/molecule_info.h5,0
+Control_4,cellranger_rna_counts_dir/Control_4/outs/molecule_info.h5,0
+Control_5,cellranger_rna_counts_dir/Control_5/outs/molecule_info.h5,0
+DN_1,cellranger_rna_counts_dir/DN_1/outs/molecule_info.h5,1
+DN_2,cellranger_rna_counts_dir/DN_2/outs/molecule_info.h5,1
+DN_3,cellranger_rna_counts_dir/DN_3/outs/molecule_info.h5,1
+DN_4,cellranger_rna_counts_dir/DN_4/outs/molecule_info.h5,1
+DN_5,cellranger_rna_counts_dir/DN_5/outs/molecule_info.h5,1
+Control_6,cellranger_rna_counts_dir/rna_counts/Control_6/outs/molecule_info.h5,0

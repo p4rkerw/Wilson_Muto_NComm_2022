@@ -1,0 +1,7 @@
+#mapping
+bowtie2 --very-sensitive  -p 8 -x /home/users/ymuto/GRCh38_noalt_as/GRCh38_noalt_as -X 2000 -1 Prim_ATAC_rep1_R1_val_1.fq.gz -2 Prim_ATAC_rep1_R2_val_2.fq.gz -S Prim_ATAC_rep1.sam
+
+#sort&index
+samtools view -bS Prim_ATAC_rep1.sam -@ 8 | samtools sort > Prim_ATAC_rep1.bam
+rm Prim_ATAC_rep1.sam
+samtools index -@ 8 Prim_ATAC_rep1.bam

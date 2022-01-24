@@ -1,0 +1,4 @@
+Control_4	1	/scratch1/fs1/parkerw/scafe/bam_to_ctss/Control_4/bed/Control_4.UMI_CB.ctss.bed.gz	/scratch1/fs1/parkerw/scafe/count/Control_4/matrix/barcodes.tsv	/scratch1/fs1/parkerw/scafe/bam_to_ctss/Control_4/bed/Control_4.CB.ctss.bed.gz
+Control_5	2	/scratch1/fs1/parkerw/scafe/bam_to_ctss/Control_5/bed/Control_5.UMI_CB.ctss.bed.gz	/scratch1/fs1/parkerw/scafe/count/Control_5/matrix/barcodes.tsv	/scratch1/fs1/parkerw/scafe/bam_to_ctss/Control_5/bed/Control_5.CB.ctss.bed.gz
+DN_4	3	/scratch1/fs1/parkerw/scafe/bam_to_ctss/DN_4/bed/DN_4.UMI_CB.ctss.bed.gz	/scratch1/fs1/parkerw/scafe/count/DN_4/matrix/barcodes.tsv	/scratch1/fs1/parkerw/scafe/bam_to_ctss/DN_4/bed/DN_4.CB.ctss.bed.gz
+DN_5	4	/scratch1/fs1/parkerw/scafe/bam_to_ctss/DN_5/bed/DN_5.UMI_CB.ctss.bed.gz	/scratch1/fs1/parkerw/scafe/count/DN_5/matrix/barcodes.tsv	/scratch1/fs1/parkerw/scafe/bam_to_ctss/DN_5/bed/DN_5.CB.ctss.bed.gz

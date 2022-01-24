@@ -1,0 +1,15 @@
+library_id,fragments,cells
+Control_1,cellranger_atac_counts_dir/Control_1/outs/fragments.tsv.gz,cellranger_atac_counts_dir/Control_1/outs/singlecell.csv
+Control_2,cellranger_atac_counts_dir/Control_2/outs/fragments.tsv.gz,cellranger_atac_counts_dir/Control_2/outs/singlecell.csv
+Control_3,cellranger_atac_counts_dir/Control_3/outs/fragments.tsv.gz,cellranger_atac_counts_dir/Control_3/outs/singlecell.csv
+Control_4,cellranger_atac_counts_dir/Control_4/outs/fragments.tsv.gz,cellranger_atac_counts_dir/Control_4/outs/singlecell.csv
+Control_5,cellranger_atac_counts_dir/Control_5/outs/fragments.tsv.gz,cellranger_atac_counts_dir/Control_5/outs/singlecell.csv
+DN_1,cellranger_atac_counts_dir/DN_1/outs/fragments.tsv.gz,cellranger_atac_counts_dir/DN_1/outs/singlecell.csv
+DN_2,cellranger_atac_counts_dir/DN_2/outs/fragments.tsv.gz,cellranger_atac_counts_dir/DN_2/outs/singlecell.csv
+DN_3,cellranger_atac_counts_dir/DN_3/outs/fragments.tsv.gz,cellranger_atac_counts_dir/DN_3/outs/singlecell.csv
+DN_4,cellranger_atac_counts_dir/DN_4/outs/fragments.tsv.gz,cellranger_atac_counts_dir/DN_4/outs/singlecell.csv
+DN_5,cellranger_atac_counts_dir/DN_5/outs/fragments.tsv.gz,cellranger_atac_counts_dir/DN_5/outs/singlecell.csv
+Control_6,cellranger_atac_counts_dir/Control_6/outs/fragments.tsv.gz,cellranger_atac_counts_dir/Control_6/outs/singlecell.csv
+DN_6,cellranger_atac_counts_dir/DN_6/outs/fragments.tsv.gz,cellranger_atac_counts_dir/DN_6/outs/singlecell.csv
+DN_7,cellranger_atac_counts_dir/DN_7/outs/fragments.tsv.gz,cellranger_atac_counts_dir/DN_7/outs/singlecell.csv
+

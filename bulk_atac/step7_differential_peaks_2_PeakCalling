@@ -1,0 +1,3 @@
+#Call the peaks, by merging all the replicates (bam files), with very less stringent criteria ( p-value of 0.1 ) such that you end up with union of regions ( peaks ) across two biological conditions.
+
+macs2 callpeak -t merged_sort.bam  -f BAMPE  --pvalue 1e-1 --call-summits  —bdg
