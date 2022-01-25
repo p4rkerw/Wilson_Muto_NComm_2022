@@ -124,7 +124,7 @@ Idents(atacAggr) <- paste0(atacAggr@meta.data$celltype,"_",atacAggr@meta.data$di
 
 # read in the GR cut and run peaks and intersect with plot region
 library(plyranges)
-file <- here("project","cut_and_run","hTERT_RPTEC","GR","GR_NT","GR_NT_peaks.narrowPeak")
+file <- here("project","cut_and_run","hTERT_RPTEC","GR","GR_NT","hTERT_GR_consensus.bed")
 GRpeak.gr <- fread(file) %>%
   dplyr::rename(chrom = V1, start = V2, end = V3) %>%
   makeGRangesFromDataFrame()
