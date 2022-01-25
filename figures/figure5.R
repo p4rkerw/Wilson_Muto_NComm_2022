@@ -122,6 +122,10 @@ peaks.gr <- AccessiblePeaks(atacAggr, assay="peaks", ident="PCT", min.cells=thre
 
 Idents(atacAggr) <- paste0(atacAggr@meta.data$celltype,"_",atacAggr@meta.data$diabetes)
 
+# assign plotting region
+region <- "chr6-35573585-35750000"
+plot.gr <- StringToGRanges(region)
+
 # read in the GR cut and run peaks and intersect with plot region
 library(plyranges)
 file <- here("project","cut_and_run","hTERT_RPTEC","GR","GR_NT","hTERT_GR_consensus.bed")
@@ -137,8 +141,6 @@ dar.pct <- read.xlsx(file, sheet="PCT", rowNames = TRUE) %>%
   rownames_to_column(var = "peak")
 
 dar.gr <- StringToGRanges(dar.pct$peak)
-region <- "chr6-35573585-35750000"
-plot.gr <- StringToGRanges(region)
 dar.gr <- join_overlap_intersect(dar.gr, plot.gr)
 peaks_to_plot.gr <- join_overlap_intersect(peaks.gr, plot.gr)
 
