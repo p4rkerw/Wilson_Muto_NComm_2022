@@ -79,7 +79,7 @@ peaks.start.dar.gr <- peaks.start.gr[peaks.start.id | peaks.end.id]
 peaks.end.dar.gr <- peaks.end.gr[peaks.start.id | peaks.end.id]
 
 # load glucocorticoid receptor binding sites
-gre.gr <- fread(here("project","cut_and_run","hTERT_RPTEC","GR","GR_NT","hTERT_GR_rep1_peaks.narrowPeak")) %>%
+gre.gr <- fread(here("project","cut_and_run","hTERT_RPTEC","GR","GR_NT","hTERT_GR_consensus.bed")) %>%
   dplyr::rename(chrom = V1, start = V2, end = V3) %>%
   makeGRangesFromDataFrame()
 
