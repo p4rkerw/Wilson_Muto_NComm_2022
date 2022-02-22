@@ -146,7 +146,7 @@ dist_dar_tss <- peakAnno@anno@elementMetadata@listData$distanceToTSS
 peakloc <- peakAnno@anno@elementMetadata@listData$annotation
 peakloc <- word(peakloc, 1)
 
-df <- data.frame(peak=df$peak, dist=dist_dar_tss, Estimate=df$Estimate, peakloc=peakloc, gene=df$gene, pval=df$p.value_exp, padj=df$padj)
+df <- data.frame(peak=df$peak, dist=dist_dar_tss, Estimate=df$estimate_exp, peakloc=peakloc, gene=df$gene, pval=df$p.value_exp, padj=df$padj)
 
 # this will convert very large or very small estimates to +Inf or -Inf
 # these are likely outliers and are removed from dataset
