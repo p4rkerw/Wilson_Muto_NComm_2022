@@ -131,7 +131,7 @@ df <- fread(here("project","analysis","dkd","allele_specific","glme_results.csv"
 txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
 
 # filter by padj
-df$padj <- p.adjust(df$`Pr(>|z|)`, method = "BH")
+df$padj <- p.adjust(df$df$p.value_exp, method = "BH")
 
 # convert to granges
 peaks.gr <- StringToGRanges(df$peak, sep = c("-","-"))
