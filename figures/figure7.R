@@ -200,7 +200,7 @@ top_layer <- ggplot() +
   geom_hline(yintercept=0) +
   theme_bw() +
   xlab("Distance from TSS") +
-  ylab("Log Odds (ALT Allele)") +
+  ylab("Log Odds (Target Gene Expression)") +
   scale_colour_brewer('Peak Location', palette = "Set1") +
   ylim(-limit, limit)
 p3 <- top_layer + geom_point(data = toplot2, size=1, aes(x=distmod, y=log_odds, fill="black"))
