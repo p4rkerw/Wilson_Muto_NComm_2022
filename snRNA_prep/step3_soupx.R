@@ -88,6 +88,35 @@ head(meta)
 # estimate contamination
 soup.channel  <- autoEstCont(soup.channel)
 
+# create an adjusted count matrix
+adj.matrix  <- adjustCounts(soup.channel, roundToInt = T)
+
+# create a new assay within the rna object to hold the adjusted counts matrix
+soupx <- CreateAssayObject(counts = adj.matrix)
+
+# add this assay to the previously created Seurat object
+srat[["soupx"]] <- soupx
+
+# change default assay and reanalyze with the adjusted counts
+DefaultAssay(srat) <- "soupx"
+srat    <- SCTransform(srat, verbose = TRUE)
+srat    <- RunPCA(srat, verbose = TRUE)
+srat    <- RunUMAP(srat, dims = 1:30, verbose = TRUE)
+srat    <- FindNeighbors(srat, dims = 1:30, verbose = TRUE)
+srat    <- FindClusters(srat, verbose = T)
+
+pdf(here("project","analysis","dkd","plots","soupx_clusters.pdf"))
+p1 <- DimPlot(rnaAggr, reduction = "umap", label = TRUE) +
+  ggtitle("snRNA clustering after SoupX correction")
+print(p1)
+dev.off()
+
+
+
+
+
+
+
 
 
 
