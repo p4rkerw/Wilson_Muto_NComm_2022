@@ -99,14 +99,14 @@ srat[["soupx"]] <- soupx
 
 # change default assay and reanalyze with the adjusted counts
 DefaultAssay(srat) <- "soupx"
-srat    <- SCTransform(srat, verbose = TRUE)
+srat    <- SCTransform(srat, assay="soupx", verbose = TRUE)
 srat    <- RunPCA(srat, verbose = TRUE)
-srat    <- RunUMAP(srat, dims = 1:30, verbose = TRUE)
-srat    <- FindNeighbors(srat, dims = 1:30, verbose = TRUE)
-srat    <- FindClusters(srat, verbose = T)
+srat    <- RunUMAP(srat, dims = 1:24, verbose = TRUE)
+srat    <- FindNeighbors(srat, dims = 1:24, verbose = TRUE)
+srat    <- FindClusters(rnaAggr, verbose = TRUE, resolution = 0.8, future.seed=TRUE)
 
-pdf(here("project","analysis","dkd","plots","soupx_clusters.pdf"))
-p1 <- DimPlot(rnaAggr, reduction = "umap", label = TRUE) +
+pdf(here("project","analysis","dkd","rna_aggr_prep","plots","soupx_clusters.pdf"))
+p1 <- DimPlot(srat, reduction = "umap", label = TRUE) +
   ggtitle("snRNA clustering after SoupX correction")
 print(p1)
 dev.off()
