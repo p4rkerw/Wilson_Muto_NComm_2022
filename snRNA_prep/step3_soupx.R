@@ -103,12 +103,18 @@ srat    <- SCTransform(srat, assay="soupx", verbose = TRUE)
 srat    <- RunPCA(srat, verbose = TRUE)
 srat    <- RunUMAP(srat, dims = 1:24, verbose = TRUE)
 srat    <- FindNeighbors(srat, dims = 1:24, verbose = TRUE)
-srat    <- FindClusters(rnaAggr, verbose = TRUE, resolution = 0.8, future.seed=TRUE)
+srat    <- FindClusters(srat, verbose = TRUE, resolution = 0.8)
+
+anno <- data.frame(celltype=rnaAggr@meta.data$celltype)
+rownames(anno) <- rownames(rnaAggr@meta.data)
+srat <- AddMetaData(srat, anno)
 
 pdf(here("project","analysis","dkd","rna_aggr_prep","plots","soupx_clusters.pdf"))
-p1 <- DimPlot(srat, reduction = "umap", label = TRUE) +
-  ggtitle("snRNA clustering after SoupX correction")
-print(p1)
+p1 <- DimPlot(srat, reduction = "umap", label = TRUE, group.by="seurat_clusters") +
+  ggtitle("snRNA-seq clustering after SoupX correction")
+p2 <- DimPlot(srat, reduction = "umap", label = TRUE, group.by="celltype") +
+  ggtitle("snRNA-seq annotation after SoupX correction")
+print(list(p1,p2))
 dev.off()
 
 
