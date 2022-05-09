@@ -264,7 +264,7 @@ AugmentPlot(p2)
 dev.off()
 
 # visualize marker genes using gene activity
-marker.genes <- c("CUBN","HAVCR1","SLC5A1","SLC5A2","VCAM1", # PT and PT-VCAM1+ markers
+marker.genes <- c("CUBN","HAVCR1","SLC5A1","SLC5A2","VCAM1","PROM1", # PT and PT-VCAM1+ markers
                   "CFH", # PEC
                   "SLC12A1", # TAL NKCC2
                   "CLDN10", #MTAL
