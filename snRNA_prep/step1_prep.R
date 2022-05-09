@@ -156,9 +156,16 @@ rnaAggr <- FindNeighbors(rnaAggr, dims = 1:30, verbose = TRUE, reduction = "harm
 rnaAggr <- FindClusters(rnaAggr, verbose = TRUE, resolution = 0.6)
 rnaAggr <- RunUMAP(rnaAggr, dims = 1:30, verbose = TRUE, reduction = "harmony")
 
+
+rnaAggr@meta.data$doublet_viz <- ifelse(rnaAggr@meta.data$doublet_id == "Singlet",0,1)
+
 Idents(rnaAggr) <- "seurat_clusters"
 p1 <- DimPlot(rnaAggr, reduction = "umap", label = TRUE) +
   ggtitle("snRNA Seurat Clustering with Harmony Including Doublets")
+p2 <- FeaturePlot(rnaAggr, features = "doublet_viz", order=TRUE) + ggtitle("snRNA-seq DoubletFinder")
+pdf(here(rna_aggr_prep,"plots","step1_doublets.pdf"))
+print(list(p1,p2))
+dev.off()
 
 # save an aggregated snRNA object with doublets
 # saveRDS(rnaAggr, here(rna_aggr_prep,"step1_doublets.rds"))
