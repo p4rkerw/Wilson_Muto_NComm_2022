@@ -48,10 +48,34 @@ soup.channel  <- SoupChannel(raw.matrix, filt.matrix)
 
 # create a seurat object and cluster
 srat  <- CreateSeuratObject(counts = filt.matrix)
-srat    <- SCTransform(srat, verbose = F)
-srat    <- RunPCA(srat, verbose = F)
-srat    <- RunUMAP(srat, dims = 1:30, verbose = F)
-srat    <- FindNeighbors(srat, dims = 1:30, verbose = F)
+srat    <- SCTransform(srat, verbose = TRUE)
+srat    <- RunPCA(srat, verbose = TRUE)
+srat    <- RunUMAP(srat, dims = 1:30, verbose = TRUE)
+srat    <- FindNeighbors(srat, dims = 1:30, verbose = TRUE)
+srat    <- FindClusters(srat, verbose = T)
+
+# update soup channel with annotated clusters
+meta    <- srat@meta.data
+umap    <- srat@reductions$umap@cell.embeddings
+soup.channel  <- setClusters(soup.channel, setNames(meta$seurat_clusters, rownames(meta)))
+soup.channel  <- setDR(soup.channel, umap)
+head(meta)
+
+# estimate contamination
+soup.channel  <- autoEstCont(soup.channel) # 0.04
+
+# do the analysis a second time only including the annotated barcodes in the filtered matrix
+filt.matrix <- filt.matrix[,colnames(filt.matrix) %in% rownames(rnaAggr@meta.data)]
+
+# create a soup channel
+soup.channel  <- SoupChannel(raw.matrix, filt.matrix)
+
+# create a seurat object and cluster
+srat  <- CreateSeuratObject(counts = filt.matrix)
+srat    <- SCTransform(srat, verbose = TRUE)
+srat    <- RunPCA(srat, verbose = TRUE)
+srat    <- RunUMAP(srat, dims = 1:30, verbose = TRUE)
+srat    <- FindNeighbors(srat, dims = 1:30, verbose = TRUE)
 srat    <- FindClusters(srat, verbose = T)
 
 # update soup channel with annotated clusters
@@ -63,4 +87,7 @@ head(meta)
 
 # estimate contamination
 soup.channel  <- autoEstCont(soup.channel)
+
+
+
 
