@@ -201,7 +201,7 @@ imputation <- TransferData(
 atacAggr_macs2[["IMPRNA"]] <- imputation
 
 # visualize marker genes using gene activity
-marker.genes <- c("CUBN","HAVCR1","SLC5A1","SLC5A2","VCAM1", # PT and PT-VCAM1+ markers
+marker.genes <- c("CUBN","HAVCR1","SLC5A1","SLC5A2","VCAM1","PROM1", # PT and PT-VCAM1+ markers
                   "CFH", # PEC
                   "SLC12A1", # TAL NKCC2
                   "CLDN10", #MTAL
@@ -270,7 +270,7 @@ atacAggr_macs2 <- RenameIdents(atacAggr_macs2,
   '15' = 'PEC',
   '16' = 'FIB_VSMC_MC',
   '17' = 'MONO',
-  '18' = 'PEC',
+  '18' = 'PST',
   '19' = 'TCELL',
   '20' = 'PODO',
   '21' = 'BCELL',
