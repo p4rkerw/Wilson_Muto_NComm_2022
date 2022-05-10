@@ -277,7 +277,7 @@ atacAggr_macs2 <- RenameIdents(atacAggr_macs2,
   '22' = 'PT_CD36')
 
 # update levels
-levels(atacAggr_macs2) <- c("PCT","PST","PT_VCAM1","PT_CD36","PEC","ATL",
+levels(atacAggr_macs2) <- c("PCT","PST","PT_VCAM1","PT_PROM1","PT_CD36","PEC","ATL",
           "TAL1","TAL2","DCT1","DCT2","PC",
           "ICA","ICB","PODO","ENDO","FIB_VSMC_MC",
           "TCELL","BCELL","MONO")
