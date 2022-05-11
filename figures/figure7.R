@@ -49,7 +49,7 @@ for(gwas_trait in unique(res$trait)) {
   toplot <- dplyr::filter(res, trait == gwas_trait)
 
   # reorder the idents
-  idents <- c("PCT","PST","PT_VCAM1","PT_CD36","PEC","ATL","TAL1","TAL2","DCT1","DCT2","PC","ICA","ICB","PODO","ENDO","FIB_VSMC_MC","TCELL","BCELL","MONO")
+  idents <- c("PCT","PST","PT_VCAM1","PT_PROM1","PT_CD36","PEC","ATL","TAL1","TAL2","DCT1","DCT2","PC","ICA","ICB","PODO","ENDO","FIB_VSMC_MC","TCELL","BCELL","MONO")
   toplot$celltype <- factor(toplot$Name, levels = rev(idents))
 
   pval_threshold = -log10(0.05)
@@ -92,7 +92,7 @@ for(gwas_trait in unique(res$trait)) {
   toplot <- dplyr::filter(res, trait == gwas_trait)
 
   # reorder the idents
-  idents <- c("PCT","PST","PT_VCAM1","PT_CD36","PEC","ATL","TAL1","TAL2","DCT1","DCT2","PC","ICA","ICB","PODO","ENDO","FIB_VSMC_MC","TCELL","BCELL","MONO")
+  idents <- c("PCT","PST","PT_VCAM1","PT_PROM1","PT_CD36","PEC","ATL","TAL1","TAL2","DCT1","DCT2","PC","ICA","ICB","PODO","ENDO","FIB_VSMC_MC","TCELL","BCELL","MONO")
   toplot$celltype <- factor(toplot$Name, levels = rev(idents))
 
   pval_threshold = -log10(0.05)
