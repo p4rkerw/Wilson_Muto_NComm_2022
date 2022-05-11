@@ -9,6 +9,7 @@ library(Signac)
 library(GenomicRanges)
 library(Signac)
 library(stringr)
+library(circlize)
 
 figures <- here("project","analysis","dkd","figures")
 
@@ -71,7 +72,7 @@ dar.ls <- lapply(idents, function(ident){
 })
 names(dar.ls) <- idents
 
-levels <- c("PCT","PST","PT_VCAM1","PT_CD36","PEC",
+levels <- c("PCT","PST","PT_VCAM1","PT_PROM1","PT_CD36","PEC",
             "ATL","TAL1","TAL2","DCT1","DCT2",
             "PC","ICA","ICB","PODO","ENDO",
             "FIB_VSMC_MC","BCELL","TCELL","MONO")
