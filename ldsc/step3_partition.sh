@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # useful resource https://github.com/Nealelab/UKBB_ldsc_scripts
-# export LSF_DOCKER_VOLUMES="$HOME:$HOME \
-# $STORAGE1/diabneph:$HOME/project \
-# $STORAGE1/reference:$HOME/reference \
-# $SCRATCH1:$SCRATCH1"
+export LSF_DOCKER_VOLUMES="$HOME:$HOME \
+$STORAGE1/diabneph:$HOME/project \
+$STORAGE1/reference:$HOME/reference \
+$SCRATCH1:$SCRATCH1"
 
-# # # to run interactive
-# bsub -Is -G compute-parkerw -R 'rusage[mem=64GB]' -q general-interactive -a 'docker(p4rkerw/ldsc:1.0)' /bin/bash
+# # to run interactive
+bsub -Is -G compute-parkerw -R 'rusage[mem=64GB]' -q general-interactive -a 'docker(p4rkerw/ldsc:1.0)' /bin/bash
 
 # run interactive local
 # SCRATCH1=/mnt/g/scratch
@@ -34,8 +34,8 @@ tar -C $SCRATCH1 -xvzf $SCRATCH1/1000G_Phase3_baseline_ldscores.tgz
 wget -P $SCRATCH1 https://storage.googleapis.com/broad-alkesgroup-public/LDSCORE/1000G_Phase3_baseline_v1.2_ldscores.tgz
 tar -C $SCRATCH1 -xvzf $SCRATCH1/1000G_Phase3_baseline_v1.2_ldscores.tgz
 
-wget -P $SCRATCH1 https://storage.googleapis.com/broad-alkesgroup-public/LDSCORE/1000G_Phase3_baselineLD_v2.2_ldscores.tgz
-tar -C $SCRATCH1/1000G_Phase3_baselineLD_v2.2_ldscores/ -xvzf $SCRATCH1/1000G_Phase3_baselineLD_v2.2_ldscores.tgz
+wget -P $SCRATCH1/1000G_Phase3_baselineLD_v2.2_ldscores https://storage.googleapis.com/broad-alkesgroup-public/LDSCORE/1000G_Phase3_baselineLD_v2.2_ldscores.tgz
+tar -C $SCRATCH1/1000G_Phase3_baselineLD_v2.2_ldscores -xvzf $SCRATCH1/1000G_Phase3_baselineLD_v2.2_ldscores.tgz
 
 wget -P $SCRATCH1 https://data.broadinstitute.org/alkesgroup/LDSCORE/weights_hm3_no_hla.tgz
 tar -C $SCRATCH1 -xvzf $SCRATCH1/weights_hm3_no_hla.tgz
@@ -90,7 +90,7 @@ parallel -j 6 run_ldsc_partition $annotation_dir $results_dir ::: ${seurat_cellt
 # run_ldsc_partition $annotation_dir $results_dir $seurat_celltype $gwas_trait
 
 # analyze differentially accessible cell-specific peaks in diabetes obtained by signac findmarkers
-seurat_celltypes=(ATL DCT1 DCT2 ENDO ICA ICB BCELL TCELL FIB_VSMC_MC MONO PC PCT PEC PODO PST PT_VCAM1 PT_PROM1 PT_CD36 TAL1 TAL2 merge)
+# seurat_celltypes=(ATL DCT1 DCT2 ENDO ICA ICB BCELL TCELL FIB_VSMC_MC MONO PC PCT PEC PODO PST PT_VCAM1 PT_PROM1 PT_CD36 TAL1 TAL2 merge)
 gwas_traits=(eGFR CKD MICRO URINENA)
 results_dir=project/analysis/dkd/ldsc/partition/celltype_diabetes_dar
 annotation_dir=project/analysis/dkd/ldsc/annoscore/celltype_diabetes_dar
