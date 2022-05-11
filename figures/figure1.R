@@ -190,7 +190,7 @@ names(dar.ls) <- idents
 id_remove <- names(dar.ls) %in% c("BCELL","TCELL","MONO")
 dar.ls <- dar.ls[!id_remove]
 
-levels <- c("PCT","PST","PT_VCAM1","PT_CD36","PEC",
+levels <- c("PCT","PST","PT_VCAM1","PT_PROM1","PT_CD36","PEC",
   "ATL","TAL1","TAL2","DCT1","DCT2",
   "PC","ICA","ICB","PODO","ENDO",
   "FIB_VSMC_MC")
