@@ -81,7 +81,7 @@ function run_ldsc_partition() {
 export -f run_ldsc_partition
 
 # analyze cell-specific peaks obtained from Signac FindMarkers function
-seurat_celltypes=(ATL DCT1 DCT2 ENDO ICA ICB BCELL TCELL FIB_VSMC_MC MONO PC PCT PEC PODO PST PT_VCAM1 PT_CD36 TAL1 TAL2)
+seurat_celltypes=(ATL DCT1 DCT2 ENDO ICA ICB BCELL TCELL FIB_VSMC_MC MONO PC PCT PEC PODO PST PT_VCAM1 PT_PROM1 PT_CD36 TAL1 TAL2)
 gwas_traits=(eGFR CKD MICRO URINENA)
 results_dir=project/analysis/dkd/ldsc/partition/celltype_markers
 annotation_dir=project/analysis/dkd/ldsc/annoscore/celltype_markers
@@ -90,7 +90,7 @@ parallel -j 6 run_ldsc_partition $annotation_dir $results_dir ::: ${seurat_cellt
 # run_ldsc_partition $annotation_dir $results_dir $seurat_celltype $gwas_trait
 
 # analyze differentially accessible cell-specific peaks in diabetes obtained by signac findmarkers
-seurat_celltypes=(ATL DCT1 DCT2 ENDO ICA ICB BCELL TCELL FIB_VSMC_MC MONO PC PCT PEC PODO PST PT_VCAM1 PT_CD36 TAL1 TAL2 merge)
+seurat_celltypes=(ATL DCT1 DCT2 ENDO ICA ICB BCELL TCELL FIB_VSMC_MC MONO PC PCT PEC PODO PST PT_VCAM1 PT_PROM1 PT_CD36 TAL1 TAL2 merge)
 gwas_traits=(eGFR CKD MICRO URINENA)
 results_dir=project/analysis/dkd/ldsc/partition/celltype_diabetes_dar
 annotation_dir=project/analysis/dkd/ldsc/annoscore/celltype_diabetes_dar
@@ -116,7 +116,7 @@ control_anno_dir=project/analysis/dkd/ldsc/annoscore/celltype_markers
 results_dir=project/analysis/dkd/ldsc/partition/celltype_markers
 mkdir -p $results_dir	
 
-seurat_celltypes=(ATL DCT1 DCT2 ENDO ICA ICB BCELL TCELL FIB_VSMC_MC MONO PC PCT PEC PODO PST PT_VCAM1 PT_CD36 TAL1 TAL2)
+seurat_celltypes=(ATL DCT1 DCT2 ENDO ICA ICB BCELL TCELL FIB_VSMC_MC MONO PC PCT PEC PODO PST PT_VCAM1 PT_PROM1 PT_CD36 TAL1 TAL2)
 for seurat_celltype in ${seurat_celltypes[*]}; do
 echo -e "${seurat_celltype}\t${annotation_dir}/${seurat_celltype}.,${control_anno_dir}/allpeaks." >> $SCRATCH1/partition.ldcts
 done
@@ -150,7 +150,7 @@ control_anno_dir=project/analysis/dkd/ldsc/annoscore/celltype_markers
 results_dir=project/analysis/dkd/ldsc/partition/celltype_diabetes_dar
 mkdir -p $results_dir	
 
-seurat_celltypes=(ATL DCT1 DCT2 ENDO ICA ICB BCELL TCELL FIB_VSMC_MC MONO PC PCT PEC PODO PST PT_VCAM1 PT_CD36 TAL1 TAL2 merge)
+seurat_celltypes=(ATL DCT1 DCT2 ENDO ICA ICB BCELL TCELL FIB_VSMC_MC MONO PC PCT PEC PODO PST PT_VCAM1 PT_PROM1 PT_CD36 TAL1 TAL2 merge)
 for seurat_celltype in ${seurat_celltypes[*]}; do
 echo -e "${seurat_celltype}\t${annotation_dir}/${seurat_celltype}.,${control_anno_dir}/allpeaks." >> $SCRATCH1/dar.partition.ldcts
 done
