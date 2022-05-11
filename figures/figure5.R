@@ -56,7 +56,7 @@ deg.df <- lapply(rna_idents, function(ident){
 }) %>% bind_rows()
 
 # update deg.df so rna celltypes match the atac data
-new_atac_idents <- c("PT","DCT1","PT","TAL1","DCT2","TAL2","PTVCAM1","ATL","ENDO","ICA","PC","ICB","PEC","FIB","LEUK","LEUK","PODO","LEUK","PT")
+new_atac_idents <- c("PT","PT","PTVCAM1","PTVCAM1","PTVCAM1","PEC","ATL","TAL1","TAL2","DCT1","DCT2","PC","ICA","ICB","PODO","ENDO","MESFIB","LEUK","LEUK","LEUK")
 new_atac_celltype <- plyr::mapvalues(motifs.sub$celltype, from = atac_idents, to = new_atac_idents)
 
 # plot deg on y-axis vs. motif enrichment on x-axis for differentially expressed TF that also 
