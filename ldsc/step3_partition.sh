@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # useful resource https://github.com/Nealelab/UKBB_ldsc_scripts
-export LSF_DOCKER_VOLUMES="$HOME:$HOME \
-$STORAGE1/diabneph:$HOME/project \
-$STORAGE1/reference:$HOME/reference \
-$SCRATCH1:$SCRATCH1"
+# export LSF_DOCKER_VOLUMES="$HOME:$HOME \
+# $STORAGE1/diabneph:$HOME/project \
+# $STORAGE1/reference:$HOME/reference \
+# $SCRATCH1:$SCRATCH1"
 
-# # to run interactive
-bsub -Is -G compute-parkerw -R 'rusage[mem=64GB]' -q general-interactive -a 'docker(p4rkerw/ldsc:1.0)' /bin/bash
+# # # to run interactive
+# bsub -Is -G compute-parkerw -R 'rusage[mem=64GB]' -q general-interactive -a 'docker(p4rkerw/ldsc:1.0)' /bin/bash
 
 # run interactive local
 # SCRATCH1=/mnt/g/scratch
