@@ -34,6 +34,7 @@ library(TxDb.Hsapiens.UCSC.hg38.knownGene)
 dar <- read.csv(here("project","analysis","dkd","markers","dar_chipseeker_anno.csv"), row.names=1) %>%
   dplyr::filter(abs_log2FC > 0.1)
 dar.gr <- StringToGRanges(dar$peak)
+dar.gr$peakloc <- dar$peakloc
 
 # load databases
 db <- c("hg38_genes_promoters","hg38_enhancers_fantom")
@@ -51,11 +52,11 @@ dar_anno.df <- dplyr::mutate(dar_anno.df, peak = paste0(seqnames, "-", start, "-
 
 # count peaks mapping to enhancers
 enh <- dplyr::filter(dar_anno.df, annot.type == "hg38_enhancers_fantom")
-n_distinct(enh$peak) # n=243
+n_distinct(enh$peak) # n=245
 
 # count peaks mapping to promoters
 prom <- dplyr::filter(dar_anno.df, annot.type == "hg38_genes_promoters")
-n_distinct(prom$peak) # n=497
+n_distinct(prom$peak) # n=496
 
 # calculate mean distance of enh to nearest TSS
 # annotate the list of GRanges DAR for each cell type
