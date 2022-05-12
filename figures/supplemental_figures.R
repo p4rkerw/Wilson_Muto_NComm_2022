@@ -123,6 +123,7 @@ library(dplyr)
 library(tibble)
 library(openxlsx)
 library(plyranges)
+library(data.table)
 
 figures <- here("project","analysis","dkd","figures")
 atac_aggr_prep <- here("project","analysis","dkd","atac_aggr_prep")
@@ -151,14 +152,22 @@ window <- 20000
 start(plot.gr) <- start(plot.gr) - window
 end(plot.gr) <- end(plot.gr) + window
 
+file <- here("project","cut_and_run","hTERT_RPTEC","GR","GR_NT","hTERT_GR_consensus.bed")
+GRpeak.gr <- fread(file) %>%
+  dplyr::rename(chrom = V1, start = V2, end = V3) %>%
+  makeGRangesFromDataFrame()
+GRpeak.gr <- join_overlap_intersect(GRpeak.gr, plot.gr)
+
 # intersect plotting region with dar
 select.gr <- join_overlap_intersect(dar.gr, plot.gr)
 
-# gene plot
-cp <- CoveragePlot(atacAggr, ident=c("PCT_0","PCT_1"), region = plot.gr, peaks=TRUE, links=FALSE)
-ccan.plot <- LinkPlot(atacAggr, region = plot.gr, min.cutoff=0.4)
+peaks.plot <- PeakPlot(atacAggr, region = plot.gr)
 dar.plot <- PeakPlot(atacAggr, region = plot.gr, peaks=select.gr)
-plot <- CombineTracks(list(cp,dar.plot, ccan.plot))
+gr.plot <- PeakPlot(atacAggr, region = plot.gr, peaks=GRpeak.gr)
+ccan.plot <- LinkPlot(atacAggr, region= plot.gr, min.cutoff=0.4)
+
+# combine tracks
+plot <- CombineTracks(list(cp, peaks.plot, dar.plot, gr.plot, ccan.plot))
 
 # this will print coverage plot with the links
 pdf(here(figures, "sfigure_PT_ATP1B1.pdf"))
@@ -168,7 +177,8 @@ dev.off()
 cp <- CoveragePlot(atacAggr, ident=c("TAL1_0","TAL1_1"), region = plot.gr, peaks=TRUE, links=FALSE)
 ccan.plot <- LinkPlot(atacAggr, region = plot.gr, min.cutoff=0.4)
 dar.plot <- PeakPlot(atacAggr, region = plot.gr, peaks=select.gr)
-plot <- CombineTracks(list(cp,dar.plot, ccan.plot))
+gr.plot <- PeakPlot(atacAggr, region = plot.gr, peaks=GRpeak.gr)
+plot <- CombineTracks(list(cp, dar.plot, gr.plot, ccan.plot))
 
 # this will print coverage plot with the links
 pdf(here(figures, "sfigure_TAL1_ATP1B1.pdf"))
@@ -178,7 +188,7 @@ dev.off()
 cp <- CoveragePlot(atacAggr, ident=c("TAL2_0","TAL2_1"), region = plot.gr, peaks=TRUE, links=FALSE)
 ccan.plot <- LinkPlot(atacAggr, region = plot.gr, min.cutoff=0.4)
 dar.plot <- PeakPlot(atacAggr, region = plot.gr, peaks=select.gr)
-plot <- CombineTracks(list(cp,dar.plot, ccan.plot))
+plot <- CombineTracks(list(cp,dar.plot, gr.plot, ccan.plot))
 
 # this will print coverage plot with the links
 pdf(here(figures, "sfigure_TAL2_ATP1B1.pdf"))
@@ -206,11 +216,14 @@ end(plot.gr) <- end(plot.gr) + 100000
 # intersect plotting region with dar
 select.gr <- join_overlap_intersect(dar.gr, plot.gr)
 
+gr.plot <- PeakPlot(atacAggr, region = plot.gr, peaks=GRpeak.gr)
+gr.plot <- PeakPlot(atacAggr, region = plot.gr, peaks=GRpeak.gr)
+
 # gene plot
 cp <- CoveragePlot(atacAggr, ident=c("PCT_0","PCT_1"), region = plot.gr, peaks=TRUE, links=FALSE)
 ccan.plot <- LinkPlot(atacAggr, region = plot.gr, min.cutoff=0.7)
 dar.plot <- PeakPlot(atacAggr, region = plot.gr, peaks=select.gr)
-plot <- CombineTracks(list(cp,dar.plot, ccan.plot))
+plot <- CombineTracks(list(cp,dar.plot, gr.plot, ccan.plot))
 
 # this will print coverage plot with the links
 pdf(here(figures, "sfigure_ALDOB.pdf"))
@@ -239,11 +252,14 @@ end(plot.gr) <- end(plot.gr) + 100000
 # intersect plotting region with dar
 select.gr <- join_overlap_intersect(dar.gr, plot.gr)
 
+gr.plot <- PeakPlot(atacAggr, region = plot.gr, peaks=GRpeak.gr)
+gr.plot <- PeakPlot(atacAggr, region = plot.gr, peaks=GRpeak.gr)
+
 # gene plot
 cp <- CoveragePlot(atacAggr, ident=c("PCT_0","PCT_1"), region = plot.gr, peaks=TRUE, links=FALSE)
 ccan.plot <- LinkPlot(atacAggr, region = plot.gr, min.cutoff=0.4)
 dar.plot <- PeakPlot(atacAggr, region = plot.gr, peaks=select.gr)
-plot <- CombineTracks(list(cp,dar.plot, ccan.plot))
+plot <- CombineTracks(list(cp,dar.plot, gr.plot, ccan.plot))
 
 # this will print coverage plot with the links
 pdf(here(figures, "sfigure_G6PC.pdf"))
