@@ -161,7 +161,27 @@ dar.plot <- PeakPlot(atacAggr, region = plot.gr, peaks=select.gr)
 plot <- CombineTracks(list(cp,dar.plot, ccan.plot))
 
 # this will print coverage plot with the links
-pdf(here(figures, "sfigure_ATP1B1.pdf"))
+pdf(here(figures, "sfigure_PT_ATP1B1.pdf"))
+print(plot)
+dev.off()
+
+cp <- CoveragePlot(atacAggr, ident=c("TAL1_0","TAL1_1"), region = plot.gr, peaks=TRUE, links=FALSE)
+ccan.plot <- LinkPlot(atacAggr, region = plot.gr, min.cutoff=0.4)
+dar.plot <- PeakPlot(atacAggr, region = plot.gr, peaks=select.gr)
+plot <- CombineTracks(list(cp,dar.plot, ccan.plot))
+
+# this will print coverage plot with the links
+pdf(here(figures, "sfigure_TAL1_ATP1B1.pdf"))
+print(plot)
+dev.off()
+
+cp <- CoveragePlot(atacAggr, ident=c("TAL2_0","TAL2_1"), region = plot.gr, peaks=TRUE, links=FALSE)
+ccan.plot <- LinkPlot(atacAggr, region = plot.gr, min.cutoff=0.4)
+dar.plot <- PeakPlot(atacAggr, region = plot.gr, peaks=select.gr)
+plot <- CombineTracks(list(cp,dar.plot, ccan.plot))
+
+# this will print coverage plot with the links
+pdf(here(figures, "sfigure_TAL2_ATP1B1.pdf"))
 print(plot)
 dev.off()
 #############################################
