@@ -122,6 +122,7 @@ library(here)
 library(dplyr)
 library(tibble)
 library(openxlsx)
+library(plyranges)
 
 figures <- here("project","analysis","dkd","figures")
 atac_aggr_prep <- here("project","analysis","dkd","atac_aggr_prep")
@@ -129,28 +130,137 @@ atacAggr <- readRDS(here(atac_aggr_prep,"step6_ccan.rds"))
 DefaultAssay(atacAggr) <- "peaks"
 Idents(atacAggr) <- paste0(atacAggr@meta.data$celltype,"_",atacAggr@meta.data$diabetes)
 
-# cell-specific DAR intersection for dkd vs.control
+# cell-specific DAR for dkd vs.control
 file <- here("project","analysis","dkd","markers","dar.macs2.celltype.diab_vs_ctrl.xlsx")
-dar.pct <- read.xlsx(file, sheet="PCT", rowNames = TRUE) %>%
-  dplyr::filter(p_val_adj < 0.05) %>%
-  rownames_to_column(var = "peak") %>%
-  mutate(abs_log2FC = abs(avg_log2FC)) %>%
-  dplyr::filter(abs_log2FC > 0.1) 
+idents <- getSheetNames(file)
+dar.df <- lapply(idents, function(ident){
+  df <- read.xlsx(file, sheet = ident, rowNames = TRUE) %>%
+    dplyr::filter(p_val_adj < 0.05) %>%
+    dplyr::mutate(abs_log2FC = abs(avg_log2FC)) %>%
+    dplyr::filter(abs_log2FC > 0.1) %>%
+    rownames_to_column(var = "peak")
+  if(nrow(df) > 0) { df$celltype <- ident }
+    return(df)
+}) %>% bind_rows()
 
-dar.gr <- StringToGRanges(dar.pct$peak)
+dar.gr <- StringToGRanges(dar.df$peak)
+
+# flank the gene coordinates with window
 plot.gr <- StringToGRanges("chr1-169106683-169135009")
-dar.gr <- join_overlap_intersect(dar.gr, plot.gr)
+window <- 20000
+start(plot.gr) <- start(plot.gr) - window
+end(plot.gr) <- end(plot.gr) + window
 
-# pck1 with 1k upstream and 10k downstream flank
-cp <- CoveragePlot(atacAggr, ident=c("PCT_0","PCT_1"), region = "chr1-169106683-169135009", peaks=TRUE, links=FALSE)
-ccan.plot <- LinkPlot(atacAggr, region="chr1-169106683-169135009", min.cutoff=0.4)
-dar.plot <- PeakPlot(atacAggr, region = "chr1-169106683-169135009", peaks=dar.gr)
+# intersect plotting region with dar
+select.gr <- join_overlap_intersect(dar.gr, plot.gr)
+
+# gene plot
+cp <- CoveragePlot(atacAggr, ident=c("PCT_0","PCT_1"), region = plot.gr, peaks=TRUE, links=FALSE)
+ccan.plot <- LinkPlot(atacAggr, region = plot.gr, min.cutoff=0.4)
+dar.plot <- PeakPlot(atacAggr, region = plot.gr, peaks=select.gr)
 plot <- CombineTracks(list(cp,dar.plot, ccan.plot))
 
 # this will print coverage plot with the links
 pdf(here(figures, "sfigure_ATP1B1.pdf"))
 print(plot)
 dev.off()
+#############################################
+# ALDOB
+file <- here("project","analysis","dkd","markers","dar.macs2.celltype.diab_vs_ctrl.xlsx")
+idents <- getSheetNames(file)
+dar.df <- lapply(idents, function(ident){
+  df <- read.xlsx(file, sheet = ident, rowNames = TRUE) %>%
+    dplyr::filter(p_val_adj < 0.05) %>%
+    dplyr::mutate(abs_log2FC = abs(avg_log2FC)) %>%
+    rownames_to_column(var = "peak")
+  if(nrow(df) > 0) { df$celltype <- ident }
+    return(df)
+}) %>% bind_rows()
+dar.gr <- StringToGRanges(dar.df$peak)
 
+# flank the gene coordinates with window
+plot.gr <- StringToGRanges("chr9-101421439-101449664")
+start(plot.gr) <- start(plot.gr) - 20000
+end(plot.gr) <- end(plot.gr) + 100000
+
+# intersect plotting region with dar
+select.gr <- join_overlap_intersect(dar.gr, plot.gr)
+
+# gene plot
+cp <- CoveragePlot(atacAggr, ident=c("PCT_0","PCT_1"), region = plot.gr, peaks=TRUE, links=FALSE)
+ccan.plot <- LinkPlot(atacAggr, region = plot.gr, min.cutoff=0.7)
+dar.plot <- PeakPlot(atacAggr, region = plot.gr, peaks=select.gr)
+plot <- CombineTracks(list(cp,dar.plot, ccan.plot))
+
+# this will print coverage plot with the links
+pdf(here(figures, "sfigure_ALDOB.pdf"))
+print(plot)
+dev.off()
+
+#############################################
+# G6PC
+file <- here("project","analysis","dkd","markers","dar.macs2.celltype.diab_vs_ctrl.xlsx")
+idents <- getSheetNames(file)
+dar.df <- lapply(idents, function(ident){
+  df <- read.xlsx(file, sheet = ident, rowNames = TRUE) %>%
+    dplyr::filter(p_val_adj < 0.05) %>%
+    dplyr::mutate(abs_log2FC = abs(avg_log2FC)) %>%
+    rownames_to_column(var = "peak")
+  if(nrow(df) > 0) { df$celltype <- ident }
+    return(df)
+}) %>% bind_rows()
+dar.gr <- StringToGRanges(dar.df$peak)
+
+# flank the gene coordinates with window
+plot.gr <- StringToGRanges("chr17-42900799-42914438")
+start(plot.gr) <- start(plot.gr) - 100000
+end(plot.gr) <- end(plot.gr) + 100000
+
+# intersect plotting region with dar
+select.gr <- join_overlap_intersect(dar.gr, plot.gr)
+
+# gene plot
+cp <- CoveragePlot(atacAggr, ident=c("PCT_0","PCT_1"), region = plot.gr, peaks=TRUE, links=FALSE)
+ccan.plot <- LinkPlot(atacAggr, region = plot.gr, min.cutoff=0.4)
+dar.plot <- PeakPlot(atacAggr, region = plot.gr, peaks=select.gr)
+plot <- CombineTracks(list(cp,dar.plot, ccan.plot))
+
+# this will print coverage plot with the links
+pdf(here(figures, "sfigure_G6PC.pdf"))
+print(plot)
+dev.off()
+
+#############################################
+# FBP1
+file <- here("project","analysis","dkd","markers","dar.macs2.celltype.diab_vs_ctrl.xlsx")
+idents <- getSheetNames(file)
+dar.df <- lapply(idents, function(ident){
+  df <- read.xlsx(file, sheet = ident, rowNames = TRUE) %>%
+    dplyr::filter(p_val_adj < 0.05) %>%
+    dplyr::mutate(abs_log2FC = abs(avg_log2FC)) %>%
+    rownames_to_column(var = "peak")
+  if(nrow(df) > 0) { df$celltype <- ident }
+    return(df)
+}) %>% bind_rows()
+dar.gr <- StringToGRanges(dar.df$peak)
+
+# flank the gene coordinates with window
+plot.gr <- StringToGRanges("chr9-94603141-94640249")
+start(plot.gr) <- start(plot.gr) - 50000
+end(plot.gr) <- end(plot.gr) + 50000
+
+# intersect plotting region with dar
+select.gr <- join_overlap_intersect(dar.gr, plot.gr)
+
+# gene plot
+cp <- CoveragePlot(atacAggr, ident=c("PCT_0","PCT_1"), region = plot.gr, peaks=TRUE, links=FALSE)
+ccan.plot <- LinkPlot(atacAggr, region = plot.gr, min.cutoff=0.4)
+dar.plot <- PeakPlot(atacAggr, region = plot.gr, peaks=select.gr)
+plot <- CombineTracks(list(cp,dar.plot, ccan.plot))
+
+# this will print coverage plot with the links
+pdf(here(figures, "sfigure_FBP1.pdf"))
+print(plot)
+dev.off()
 
 
