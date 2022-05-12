@@ -295,7 +295,7 @@ gr.plot <- PeakPlot(atacAggr, region = plot.gr, peaks=GRpeak.gr)
 cp <- CoveragePlot(atacAggr, ident=c("PCT_0","PCT_1"), region = plot.gr, peaks=TRUE, links=FALSE)
 ccan.plot <- LinkPlot(atacAggr, region = plot.gr, min.cutoff=0.4)
 dar.plot <- PeakPlot(atacAggr, region = plot.gr, peaks=select.gr)
-plot <- CombineTracks(list(cp,dar.plot, ccan.plot))
+plot <- CombineTracks(list(cp,dar.plot,gr.plot, ccan.plot))
 
 # this will print coverage plot with the links
 pdf(here(figures, "sfigure_FBP1.pdf"))
