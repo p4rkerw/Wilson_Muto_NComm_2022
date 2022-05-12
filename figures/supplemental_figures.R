@@ -114,3 +114,31 @@ pdf(here(figures,"sfigure3.pdf"), width=10, height=6)
 print(p1)
 dev.off()
 #################################################################
+# draw ATP1B1 gene model peak coverage
+# edit afterwards in inskcape / adobe illustrator etc.
+library(Signac)
+library(Seurat)
+library(here)
+figures <- here("project","analysis","dkd","figures")
+atac_aggr_prep <- here("project","analysis","dkd","atac_aggr_prep")
+atacAggr <- readRDS(here(atac_aggr_prep,"step6_ccan.rds"))
+DefaultAssay(atacAggr) <- "peaks"
+
+# this will print the coverage plot by itself
+Idents(atacAggr) <- paste0(atacAggr@meta.data$celltype,"_",atacAggr@meta.data$diabetes)
+p1 <- CoveragePlot(atacAggr, ident=c("PCT_0","PCT_1"), region = "ATP1B1", peaks=FALSE, links=FALSE)
+pdf(here(figures, "sfigure_ATP1B1_coverage.pdf"))
+print(p1)
+dev.off()
+
+# # add multiple tracks together (have to use genomic coordinates rather than gene name here)
+p2 <- LinkPlot(atacAggr, region="chr1-169106683-169135009", min.cutoff=0.4)
+p3 <- CombineTracks(list(p2, p3))
+
+# this will print coverage plot with the links
+pdf(here(figures, "sfigure_ATP1B1.pdf"))
+print(p7)
+dev.off()
+
+
+
