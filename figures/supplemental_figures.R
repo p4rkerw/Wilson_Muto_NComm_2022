@@ -123,21 +123,27 @@ figures <- here("project","analysis","dkd","figures")
 atac_aggr_prep <- here("project","analysis","dkd","atac_aggr_prep")
 atacAggr <- readRDS(here(atac_aggr_prep,"step6_ccan.rds"))
 DefaultAssay(atacAggr) <- "peaks"
-
-# this will print the coverage plot by itself
 Idents(atacAggr) <- paste0(atacAggr@meta.data$celltype,"_",atacAggr@meta.data$diabetes)
-p1 <- CoveragePlot(atacAggr, ident=c("PCT_0","PCT_1"), region = "ATP1B1", peaks=FALSE, links=FALSE)
-pdf(here(figures, "sfigure_ATP1B1_coverage.pdf"))
-print(p1)
-dev.off()
 
-# # add multiple tracks together (have to use genomic coordinates rather than gene name here)
-p2 <- LinkPlot(atacAggr, region="chr1-169106683-169135009", min.cutoff=0.4)
-p3 <- CombineTracks(list(p2, p3))
+# cell-specific DAR intersection for dkd vs.control
+file <- here("project","analysis","dkd","markers","dar.macs2.celltype.diab_vs_ctrl.xlsx")
+dar.pct <- read.xlsx(file, sheet="PCT", rowNames = TRUE) %>%
+  dplyr::filter(p_val_adj < 0.05) %>%
+  rownames_to_column(var = "peak")
+
+dar.gr <- StringToGRanges(dar.pct$peak)
+plot.gr <- StringToGRanges("chr1-169106683-169135009")
+dar.gr <- join_overlap_intersect(dar.gr, plot.gr)
+
+# pck1 with 1k upstream and 10k downstream flank
+cp <- CoveragePlot(atacAggr, ident=c("PCT_0","PCT_1"), region = "chr1-169106683-169135009", peaks=TRUE, links=FALSE)
+ccan.plot <- LinkPlot(atacAggr, region="chr1-169106683-169135009", min.cutoff=0.4)
+dar.plot <- PeakPlot(atacAggr, region = "chr1-169106683-169135009", peaks=dar.gr)
+plot <- CombineTracks(list(cp,dar.plot, ccan.plot))
 
 # this will print coverage plot with the links
 pdf(here(figures, "sfigure_ATP1B1.pdf"))
-print(p7)
+print(plot)
 dev.off()
 
 
