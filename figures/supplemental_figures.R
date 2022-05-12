@@ -119,6 +119,10 @@ dev.off()
 library(Signac)
 library(Seurat)
 library(here)
+library(dplyr)
+library(tibble)
+library(openxlsx)
+
 figures <- here("project","analysis","dkd","figures")
 atac_aggr_prep <- here("project","analysis","dkd","atac_aggr_prep")
 atacAggr <- readRDS(here(atac_aggr_prep,"step6_ccan.rds"))
@@ -129,7 +133,9 @@ Idents(atacAggr) <- paste0(atacAggr@meta.data$celltype,"_",atacAggr@meta.data$di
 file <- here("project","analysis","dkd","markers","dar.macs2.celltype.diab_vs_ctrl.xlsx")
 dar.pct <- read.xlsx(file, sheet="PCT", rowNames = TRUE) %>%
   dplyr::filter(p_val_adj < 0.05) %>%
-  rownames_to_column(var = "peak")
+  rownames_to_column(var = "peak") %>%
+  mutate(abs_log2FC = abs(avg_log2FC)) %>%
+  dplyr::filter(abs_log2FC > 0.1) 
 
 dar.gr <- StringToGRanges(dar.pct$peak)
 plot.gr <- StringToGRanges("chr1-169106683-169135009")
