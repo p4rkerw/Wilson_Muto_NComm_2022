@@ -288,6 +288,9 @@ end(plot.gr) <- end(plot.gr) + 50000
 # intersect plotting region with dar
 select.gr <- join_overlap_intersect(dar.gr, plot.gr)
 
+gr.plot <- PeakPlot(atacAggr, region = plot.gr, peaks=GRpeak.gr)
+gr.plot <- PeakPlot(atacAggr, region = plot.gr, peaks=GRpeak.gr)
+
 # gene plot
 cp <- CoveragePlot(atacAggr, ident=c("PCT_0","PCT_1"), region = plot.gr, peaks=TRUE, links=FALSE)
 ccan.plot <- LinkPlot(atacAggr, region = plot.gr, min.cutoff=0.4)
