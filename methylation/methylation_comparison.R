@@ -22,6 +22,7 @@ dar.df <- lapply(idents, function(ident){
     return(df)
 }) %>% bind_rows()
 
+dar.df$overlap_atac_peak <- dar.df$peak
 dar.df <- tidyr::separate(dar.df, col = peak, into = c("chrom","start","end"), sep = "-")
 dar.gr <- makeGRangesFromDataFrame(dar.df, keep.extra.columns=TRUE)
 
@@ -143,8 +144,6 @@ dmr38.gr <- liftOver(dmr.gr, ch18) %>% unlist()
 
 # overlap with cell-specific DAR
 over6.gr <- join_overlap_intersect(dar.gr, dmr38.gr)
-
-
 
 
 
