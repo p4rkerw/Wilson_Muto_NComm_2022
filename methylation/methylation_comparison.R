@@ -6,15 +6,14 @@ library(GenomicRanges)
 library(plyranges)
 library(rtracklayer)
 
-# import liftover chain
-path = system.file(package="liftOver", "extdata", "hg38ToHg19.over.chain")
-ch = import.chain(path)
+
+# import liftover chains
+ch19 = import.chain("G:/diabneph/analysis/dkd/methylation/hg19ToHg38.over.chain")
+ch18 = import.chain("G:/diabneph/analysis/dkd/methylation/hg18ToHg38.over.chain")
 
 # read in DAR
 file <- here("project","analysis","dkd","markers","dar.macs2.celltype.diab_vs_ctrl.xlsx")
 idents <- getSheetNames(file)
-
-txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
 dar.df <- lapply(idents, function(ident){
   df <- read.xlsx(file, sheet = ident, rowNames = TRUE) %>%
     dplyr::filter(p_val_adj < 0.05) %>%
@@ -39,7 +38,7 @@ dmr.df <- read.xlsx(here("analysis","dkd","methylation","41467_2019_10378_MOESM4
   dplyr::select(peak, Methylation.probe)
 dmr.df <- tidyr::separate(dmr.df, col = peak, into = c("chrom","start","end"), sep = "-")
 dmr.gr <- makeGRangesFromDataFrame(dmr.df, keep.extra.columns=TRUE)
-dmr38.gr <- liftOver(dmr.gr, ch) %>% unlist()
+dmr38.gr <- liftOver(dmr.gr, ch19) %>% unlist()
 
 # overlap with cell-specific DAR
 over1.gr <- join_overlap_intersect(dar.gr, dmr38.gr)
@@ -55,16 +54,71 @@ dmr.df <- read.xlsx(here("analysis","dkd","methylation","41467_2019_10378_MOESM6
   dplyr::select(peak)
 dmr.df <- tidyr::separate(dmr.df, col = peak, into = c("chrom","start","end"), sep = "-")
 dmr.gr <- makeGRangesFromDataFrame(dmr.df, keep.extra.columns=TRUE)
-dmr38.gr <- liftOver(dmr.gr, ch) %>% unlist()
+dmr38.gr <- liftOver(dmr.gr, ch19) %>% unlist()
 
 # overlap with cell-specific DAR
 over2.gr <- join_overlap_intersect(dar.gr, dmr38.gr)
 
+# Assessment of differentially methylated loci in individuals with end-stage kidney disease attributed to diabetic kidney disease: an exploratory study
+# PMID: 33933144
+# hg19
+# Supplementary Table ST3: Top-ranked differentially methylated CpG sites for matched individuals with T1DM-ESKD (n=107) vs. T1DM (n=107): FDR p≤x10-8 (Analysis 1)
+dmr.df <- read.xlsx(here("analysis","dkd","methylation","13148_2021_1081_MOESM1_ESM.xlsx"), sheet = "ST3", startRow = 2) %>%
+    dplyr::mutate(peak = paste0(CHR,"-",MAPINFO,"-",MAPINFO)) %>%
+    dplyr::select(peak, CpG.ID, UCSC_RefGene_Name)
+dmr.df <- tidyr::separate(dmr.df, col = peak, into = c("chrom","start","end"), sep = "-") %>%
+  dplyr::filter(chrom != "NA")
+dmr.gr <- makeGRangesFromDataFrame(dmr.df, keep.extra.columns=TRUE)
+seqlevelsStyle(dmr.gr) <- "UCSC"
+dmr38.gr <- liftOver(dmr.gr, ch19) %>% unlist()
 
+# overlap with cell-specific DAR
+over3.gr <- join_overlap_intersect(dar.gr, dmr38.gr)
 
+# Assessment of differentially methylated loci in individuals with end-stage kidney disease attributed to diabetic kidney disease: an exploratory study
+# PMID: 33933144
+# hg19
+# Supplementary Table ST4:Top-ranked differentially methylated CpG sites for matched individuals with T1DM-ESKD (n=107) vs. T1DM (n=107): FDR p≤x10-8 and FC ±2 (Analysis 1)
+dmr.df <- read.xlsx(here("analysis","dkd","methylation","13148_2021_1081_MOESM1_ESM.xlsx"), sheet = "ST4", startRow = 2) %>%
+    dplyr::mutate(peak = paste0(CHR,"-",MAPINFO,"-",MAPINFO)) %>%
+    dplyr::select(peak, CpG.ID)
+dmr.df <- tidyr::separate(dmr.df, col = peak, into = c("chrom","start","end"), sep = "-") %>%
+  dplyr::filter(chrom != "NA")
+dmr.gr <- makeGRangesFromDataFrame(dmr.df, keep.extra.columns=TRUE)
+seqlevelsStyle(dmr.gr) <- "UCSC"
+dmr38.gr <- liftOver(dmr.gr, ch19) %>% unlist()
 
+# overlap with cell-specific DAR
+over4.gr <- join_overlap_intersect(dar.gr, dmr38.gr)
 
+# Assessment of differentially methylated loci in individuals with end-stage kidney disease attributed to diabetic kidney disease: an exploratory study
+# PMID: 33933144
+# hg19
+# Supplementary Table ST11: Top-ranked differentially methylated CpG sites for individuals with T1DM-ESKD - either dialysis or transplant (n=107) vs. T1DM (n=253): FDR p≤x10-8 (Analysis 2)
+dmr.df <- read.xlsx(here("analysis","dkd","methylation","13148_2021_1081_MOESM1_ESM.xlsx"), sheet = "ST11", startRow = 2) %>%
+    dplyr::mutate(peak = paste0(CHR,"-",MAPINFO,"-",MAPINFO)) %>%
+    dplyr::select(peak, CpG.ID)
+dmr.df <- tidyr::separate(dmr.df, col = peak, into = c("chrom","start","end"), sep = "-") %>%
+  dplyr::filter(chrom != "NA")
+dmr.gr <- makeGRangesFromDataFrame(dmr.df, keep.extra.columns=TRUE)
+seqlevelsStyle(dmr.gr) <- "UCSC"
+dmr38.gr <- liftOver(dmr.gr, ch19) %>% unlist()
 
+# overlap with cell-specific DAR
+over5.gr <- join_overlap_intersect(dar.gr, dmr38.gr)
+
+# Cytosine methylation changes in enhancer regions of core pro-fibrotic genes characterize kidney fibrosis development
+# PMID: 24098934
+# hg18
+# Supplemental Table 2 List of differentially methylated regions with p-value methylation level, genomic locus and nearest annotated transcript
+dmr.df <- read.xlsx(here("analysis","dkd","methylation","gb-2013-14-10-r108-S3.xlsx"), startRow = 3) %>%
+  dplyr::select(chr, start, end)
+dmr.gr <- makeGRangesFromDataFrame(dmr.df, keep.extra.columns=TRUE)
+seqlevelsStyle(dmr.gr) <- "UCSC"
+dmr38.gr <- liftOver(dmr.gr, ch18) %>% unlist()
+
+# overlap with cell-specific DAR
+over6.gr <- join_overlap_intersect(dar.gr, dmr38.gr)
 
 
 
