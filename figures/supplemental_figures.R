@@ -86,7 +86,7 @@ dev.off()
 ###########################################################
 # supplemental figure dotplot of atacAggr gene activity and imputed RNA markers
 levels(atacAggr) <- rev(levels(atacAggr))
-features <- c("SLC34A1","LRP2","SLC5A1","SLC5A2","HAVCR1",
+features <- c("SLC34A1","LRP2","SLC5A1","SLC5A2","HAVCR1","PROM1",
               "VCAM1","CD36","CFH","SLC12A1","CLDN16","SLC12A3",
               "AQP2","SLC26A7","SLC26A4","NPHS2","FLT1",
               "PIEZO2","COL1A2","PTPRC","CD3E","MS4A1","CSF1R")
