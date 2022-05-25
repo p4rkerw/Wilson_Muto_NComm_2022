@@ -7,6 +7,7 @@ library(plyranges)
 library(tibble)
 library(rtracklayer)
 library(Signac)
+library(data.table)
 
 
 # import liftover chains
@@ -28,6 +29,13 @@ dar.df$overlap_atac_peak <- dar.df$peak
 dar.df <- tidyr::separate(dar.df, col = peak, into = c("chrom","start","end"), sep = "-")
 dar.gr <- makeGRangesFromDataFrame(dar.df, keep.extra.columns=TRUE)
 
+# read in GR CUT&RUN peaks for bulk kidney
+cut.gr <- fread(here("analysis","dkd","cut_and_run","kidney_GR_peaks.narrowPeak")) %>%
+  dplyr::rename(chrom = V1, start = V2, end = V3) %>%
+  dplyr::mutate(gr_peak = paste0(chrom,"-",start,"-",end)) %>%
+  dplyr::select(chrom, start, end, gr_peak) %>%
+  makeGRangesFromDataFrame(keep.extra.columns=TRUE)
+
 # Kidney cytosine methylation changes improve renal function decline estimation in patients with diabetic kidney disease
 # hg19
 # PMID: 31165727
@@ -39,11 +47,11 @@ dar.gr <- makeGRangesFromDataFrame(dar.df, keep.extra.columns=TRUE)
 study_id <- "pmid31165727"
 phenotype <- "interstitial_fibrosis_dkd"
 dmr.df <- read.xlsx(here("analysis","dkd","methylation","41467_2019_10378_MOESM4_ESM.xlsx")) %>%
-  dplyr::mutate(peak = paste0(Chr,"-",Position,"-",Position)) %>%
-  dplyr::select(peak)
+  dplyr::mutate(dmr = paste0(Chr,"-",Position,"-",Position)) %>%
+  dplyr::select(dmr)
 dmr.df$study_id <- study_id
 dmr.df$phenotype <- phenotype
-dmr.df <- tidyr::separate(dmr.df, col = peak, into = c("chrom","start","end"), sep = "-")
+dmr.df <- tidyr::separate(dmr.df, col = dmr, into = c("chrom","start","end"), sep = "-", remove=FALSE)
 dmr.gr <- makeGRangesFromDataFrame(dmr.df, keep.extra.columns=TRUE)
 dmr38.gr <- liftOver(dmr.gr, ch19) %>% unlist()
 dmr38_flank.gr <- Extend(dmr38.gr, upstream=1000, downstream=1000)
@@ -51,6 +59,10 @@ dmr38_flank.gr <- Extend(dmr38.gr, upstream=1000, downstream=1000)
 # overlap with cell-specific DAR
 over1.gr <- join_overlap_intersect(dar.gr, dmr38.gr)
 over1_flank.gr <- join_overlap_intersect(dar.gr, dmr38_flank.gr)
+
+# overlap with GR cut and run peaks
+cut1.gr <- join_overlap_intersect(cut.gr, dmr38.gr)
+cut1_flank.gr <- join_overlap_intersect(cut.gr, dmr38_flank.gr)
 
 # Kidney cytosine methylation changes improve renal function decline estimation in patients with diabetic kidney disease
 # hg19
@@ -61,11 +73,11 @@ over1_flank.gr <- join_overlap_intersect(dar.gr, dmr38_flank.gr)
 study_id <- "pmid31165727"
 phenotype <- "renal_function_decline_dkd"
 dmr.df <- read.xlsx(here("analysis","dkd","methylation","41467_2019_10378_MOESM6_ESM.xlsx")) %>%
-  dplyr::mutate(peak = paste0(chr,"-",Position,"-",Position)) %>%
-  dplyr::select(peak)
+  dplyr::mutate(dmr = paste0(chr,"-",Position,"-",Position)) %>%
+  dplyr::select(dmr)
 dmr.df$study_id <- study_id
 dmr.df$phenotype <- phenotype
-dmr.df <- tidyr::separate(dmr.df, col = peak, into = c("chrom","start","end"), sep = "-")
+dmr.df <- tidyr::separate(dmr.df, col = dmr, into = c("chrom","start","end"), sep = "-", remove=FALSE)
 dmr.gr <- makeGRangesFromDataFrame(dmr.df, keep.extra.columns=TRUE)
 dmr38.gr <- liftOver(dmr.gr, ch19) %>% unlist()
 dmr38_flank.gr <- Extend(dmr38.gr, upstream=1000, downstream=1000)
@@ -74,6 +86,10 @@ dmr38_flank.gr <- Extend(dmr38.gr, upstream=1000, downstream=1000)
 over2.gr <- join_overlap_intersect(dar.gr, dmr38.gr)
 over2_flank.gr <- join_overlap_intersect(dar.gr, dmr38_flank.gr)
 
+# overlap with GR cut and run peaks
+cut2.gr <- join_overlap_intersect(cut.gr, dmr38.gr)
+cut2_flank.gr <- join_overlap_intersect(cut.gr, dmr38_flank.gr)
+
 # Assessment of differentially methylated loci in individuals with end-stage kidney disease attributed to diabetic kidney disease: an exploratory study
 # PMID: 33933144
 # hg19
@@ -81,12 +97,14 @@ over2_flank.gr <- join_overlap_intersect(dar.gr, dmr38_flank.gr)
 study_id <- "pmid33933144"
 phenotype <- "eskd_t1dm"
 dmr.df <- read.xlsx(here("analysis","dkd","methylation","13148_2021_1081_MOESM1_ESM.xlsx"), sheet = "ST3", startRow = 2) %>%
-    dplyr::mutate(peak = paste0(CHR,"-",MAPINFO,"-",MAPINFO)) %>%
-    dplyr::select(peak)
+    dplyr::mutate(dmr = paste0(CHR,"-",MAPINFO,"-",MAPINFO)) %>%
+    dplyr::select(dmr)
 dmr.df$study_id <- study_id
 dmr.df$phenotype <- phenotype
-dmr.df <- tidyr::separate(dmr.df, col = peak, into = c("chrom","start","end"), sep = "-") %>%
-  dplyr::filter(chrom != "NA")
+dmr.df <- tidyr::separate(dmr.df, col = dmr, into = c("chrom","start","end"), sep = "-", remove=FALSE) %>%
+  dplyr::filter(chrom != "NA") %>%
+  mutate(chrom = paste0("chr",chrom)) %>%
+  mutate(dmr = paste0("chr",dmr)) 
 dmr.gr <- makeGRangesFromDataFrame(dmr.df, keep.extra.columns=TRUE)
 seqlevelsStyle(dmr.gr) <- "UCSC"
 dmr38.gr <- liftOver(dmr.gr, ch19) %>% unlist()
@@ -96,6 +114,10 @@ dmr38_flank.gr <- Extend(dmr38.gr, upstream=1000, downstream=1000)
 over3.gr <- join_overlap_intersect(dar.gr, dmr38.gr)
 over3_flank.gr <- join_overlap_intersect(dar.gr, dmr38_flank.gr)
 
+# overlap with GR cut and run peaks
+cut3.gr <- join_overlap_intersect(cut.gr, dmr38.gr)
+cut3_flank.gr <- join_overlap_intersect(cut.gr, dmr38_flank.gr)
+
 # Assessment of differentially methylated loci in individuals with end-stage kidney disease attributed to diabetic kidney disease: an exploratory study
 # PMID: 33933144
 # hg19
@@ -103,12 +125,14 @@ over3_flank.gr <- join_overlap_intersect(dar.gr, dmr38_flank.gr)
 study_id <- "pmid33933144"
 phenotype <- "eskd_t1dm_fc2"
 dmr.df <- read.xlsx(here("analysis","dkd","methylation","13148_2021_1081_MOESM1_ESM.xlsx"), sheet = "ST4", startRow = 2) %>%
-    dplyr::mutate(peak = paste0(CHR,"-",MAPINFO,"-",MAPINFO)) %>%
-    dplyr::select(peak)
+    dplyr::mutate(dmr = paste0(CHR,"-",MAPINFO,"-",MAPINFO)) %>%
+    dplyr::select(dmr)
 dmr.df$study_id <- study_id
 dmr.df$phenotype <- phenotype
-dmr.df <- tidyr::separate(dmr.df, col = peak, into = c("chrom","start","end"), sep = "-") %>%
-  dplyr::filter(chrom != "NA")
+dmr.df <- tidyr::separate(dmr.df, col = dmr, into = c("chrom","start","end"), sep = "-", remove=FALSE) %>%
+  dplyr::filter(chrom != "NA") %>%
+  mutate(chrom = paste0("chr",chrom)) %>%
+  mutate(dmr = paste0("chr",dmr)) 
 dmr.gr <- makeGRangesFromDataFrame(dmr.df, keep.extra.columns=TRUE)
 seqlevelsStyle(dmr.gr) <- "UCSC"
 dmr38.gr <- liftOver(dmr.gr, ch19) %>% unlist()
@@ -118,6 +142,10 @@ dmr38_flank.gr <- Extend(dmr38.gr, upstream=1000, downstream=1000)
 over4.gr <- join_overlap_intersect(dar.gr, dmr38.gr)
 over4_flank.gr <- join_overlap_intersect(dar.gr, dmr38_flank.gr)
 
+# overlap with GR cut and run peaks
+cut4.gr <- join_overlap_intersect(cut.gr, dmr38.gr)
+cut4_flank.gr <- join_overlap_intersect(cut.gr, dmr38_flank.gr)
+
 # Assessment of differentially methylated loci in individuals with end-stage kidney disease attributed to diabetic kidney disease: an exploratory study
 # PMID: 33933144
 # hg19
@@ -125,12 +153,14 @@ over4_flank.gr <- join_overlap_intersect(dar.gr, dmr38_flank.gr)
 study_id <- "pmid33933144"
 phenotype <- "eskd_t1dm_dialysis_transplant"
 dmr.df <- read.xlsx(here("analysis","dkd","methylation","13148_2021_1081_MOESM1_ESM.xlsx"), sheet = "ST11", startRow = 2) %>%
-    dplyr::mutate(peak = paste0(CHR,"-",MAPINFO,"-",MAPINFO)) %>%
-    dplyr::select(peak)
+    dplyr::mutate(dmr = paste0(CHR,"-",MAPINFO,"-",MAPINFO)) %>%
+    dplyr::select(dmr)
 dmr.df$study_id <- study_id
 dmr.df$phenotype <- phenotype
-dmr.df <- tidyr::separate(dmr.df, col = peak, into = c("chrom","start","end"), sep = "-") %>%
-  dplyr::filter(chrom != "NA")
+dmr.df <- tidyr::separate(dmr.df, col = dmr, into = c("chrom","start","end"), sep = "-", remove=FALSE) %>%
+  dplyr::filter(chrom != "NA") %>%
+  mutate(chrom = paste0("chr",chrom)) %>%
+  mutate(dmr = paste0("chr",dmr)) 
 dmr.gr <- makeGRangesFromDataFrame(dmr.df, keep.extra.columns=TRUE)
 seqlevelsStyle(dmr.gr) <- "UCSC"
 dmr38.gr <- liftOver(dmr.gr, ch19) %>% unlist()
@@ -140,6 +170,10 @@ dmr38_flank.gr <- Extend(dmr38.gr, upstream=1000, downstream=1000)
 over5.gr <- join_overlap_intersect(dar.gr, dmr38.gr)
 over5_flank.gr <- join_overlap_intersect(dar.gr, dmr38_flank.gr)
 
+# overlap with GR cut and run peaks
+cut5.gr <- join_overlap_intersect(cut.gr, dmr38.gr)
+cut5_flank.gr <- join_overlap_intersect(cut.gr, dmr38_flank.gr)
+
 # Cytosine methylation changes in enhancer regions of core pro-fibrotic genes characterize kidney fibrosis development
 # PMID: 24098934
 # hg18
@@ -147,7 +181,8 @@ over5_flank.gr <- join_overlap_intersect(dar.gr, dmr38_flank.gr)
 study_id <- "pmid24098934"
 phenotype <- "interstitial_fibrosis_ckd"
 dmr.df <- read.xlsx(here("analysis","dkd","methylation","gb-2013-14-10-r108-S3.xlsx"), startRow = 3) %>%
-  dplyr::select(chr, start, end)
+  dplyr::select(chr, start, end) %>%
+  dplyr::mutate(dmr = paste0("chr",chr,"-",start,"-",end))
 dmr.df$study_id <- study_id
 dmr.df$phenotype <- phenotype
 dmr.gr <- makeGRangesFromDataFrame(dmr.df, keep.extra.columns=TRUE)
@@ -159,6 +194,10 @@ dmr38_flank.gr <- Extend(dmr38.gr, upstream=1000, downstream=1000)
 over6.gr <- join_overlap_intersect(dar.gr, dmr38.gr)
 over6_flank.gr <- join_overlap_intersect(dar.gr, dmr38_flank.gr)
 
+# overlap with GR cut and run peaks
+cut6.gr <- join_overlap_intersect(cut.gr, dmr38.gr)
+cut6_flank.gr <- join_overlap_intersect(cut.gr, dmr38_flank.gr)
+
 # Systematic integrated analysis of genetic and epigenetic variation in diabetic kidney disease
 # PMID: 33144501
 # hg19
@@ -169,7 +208,8 @@ dmr.df <- read.xlsx(here("analysis","dkd","methylation","pnas.2005905117.sd03.xl
   dplyr::select(chromosome, `Position.(b37)`) %>%
   dplyr::rename(chrom = chromosome) %>%
   dplyr::rename(start = `Position.(b37)`) %>%
-  dplyr::mutate(end = start)
+  dplyr::mutate(end = start) %>%
+  dplyr::mutate(dmr = paste0("chr",chrom,"-",start,"-",end))
 dmr.df$study_id <- study_id
 dmr.df$phenotype <- phenotype
 dmr.gr <- makeGRangesFromDataFrame(dmr.df, keep.extra.columns=TRUE)
@@ -181,6 +221,10 @@ dmr38_flank.gr <- Extend(dmr38.gr, upstream=1000, downstream=1000)
 over7.gr <- join_overlap_intersect(dar.gr, dmr38.gr)
 over7_flank.gr <- join_overlap_intersect(dar.gr, dmr38_flank.gr)
 
+# overlap with GR cut and run peaks
+cut7.gr <- join_overlap_intersect(cut.gr, dmr38.gr)
+cut7_flank.gr <- join_overlap_intersect(cut.gr, dmr38_flank.gr)
+
 # Systematic integrated analysis of genetic and epigenetic variation in diabetic kidney disease
 # PMID: 33144501
 # hg19
@@ -191,7 +235,8 @@ dmr.df <- read.xlsx(here("analysis","dkd","methylation","pnas.2005905117.sd04.xl
   dplyr::select(chromosome, `Position.(b37)`) %>%
   dplyr::rename(chrom = chromosome) %>%
   dplyr::rename(start = `Position.(b37)`) %>%
-  dplyr::mutate(end = start)
+  dplyr::mutate(end = start) %>%
+  dplyr::mutate(dmr = paste0("chr",chrom,"-",start,"-",end))
 dmr.df$study_id <- study_id
 dmr.df$phenotype <- phenotype
 dmr.gr <- makeGRangesFromDataFrame(dmr.df, keep.extra.columns=TRUE)
@@ -203,6 +248,10 @@ dmr38_flank.gr <- Extend(dmr38.gr, upstream=1000, downstream=1000)
 over8.gr <- join_overlap_intersect(dar.gr, dmr38.gr)
 over8_flank.gr <- join_overlap_intersect(dar.gr, dmr38_flank.gr)
 
+# overlap with GR cut and run peaks
+cut8.gr <- join_overlap_intersect(cut.gr, dmr38.gr)
+cut8_flank.gr <- join_overlap_intersect(cut.gr, dmr38_flank.gr)
+
 # Systematic integrated analysis of genetic and epigenetic variation in diabetic kidney disease
 # PMID: 33144501
 # hg19
@@ -213,7 +262,8 @@ dmr.df <- read.xlsx(here("analysis","dkd","methylation","pnas.2005905117.sd05.xl
   dplyr::select(chromosome, `Position.(b37)`) %>%
   dplyr::rename(chrom = chromosome) %>%
   dplyr::rename(start = `Position.(b37)`) %>%
-  dplyr::mutate(end = start)
+  dplyr::mutate(end = start) %>%
+  dplyr::mutate(dmr = paste0("chr",chrom,"-",start,"-",end))
 dmr.df$study_id <- study_id
 dmr.df$phenotype <- phenotype
 dmr.gr <- makeGRangesFromDataFrame(dmr.df, keep.extra.columns=TRUE)
@@ -224,6 +274,10 @@ dmr38_flank.gr <- Extend(dmr38.gr, upstream=1000, downstream=1000)
 # overlap with cell-specific DAR
 over9.gr <- join_overlap_intersect(dar.gr, dmr38.gr)
 over9_flank.gr <- join_overlap_intersect(dar.gr, dmr38_flank.gr)
+
+# overlap with GR cut and run peaks
+cut9.gr <- join_overlap_intersect(cut.gr, dmr38.gr)
+cut9_flank.gr <- join_overlap_intersect(cut.gr, dmr38_flank.gr)
 
 # DNA hypermethylation and DNA hypomethylation is present at different loci in chronic kidney disease
 # PMID: 24253112
@@ -237,7 +291,8 @@ dmr.df <- read.csv(here("analysis","dkd","methylation","pmid24253112.st2.csv"), 
   dplyr::rename(gene = V2) %>%
   tidyr::separate(col = position, into = c("chrom","start"), sep = c(":")) %>%
   dplyr::mutate(end = start) %>%
-  dplyr::select(chrom, start, end)
+  dplyr::select(chrom, start, end) %>%
+  dplyr::mutate(dmr = paste0("chr",chrom,"-",start,"-",end))
 dmr.df$study_id <- study_id
 dmr.df$phenotype <- phenotype
 dmr.gr <- makeGRangesFromDataFrame(dmr.df, keep.extra.columns=TRUE)
@@ -249,14 +304,26 @@ dmr38_flank.gr <- Extend(dmr38.gr, upstream=1000, downstream=1000)
 over10.gr <- join_overlap_intersect(dar.gr, dmr38.gr)
 over10_flank.gr <- join_overlap_intersect(dar.gr, dmr38_flank.gr)
 
+# overlap with GR cut and run peaks
+cut10.gr <- join_overlap_intersect(cut.gr, dmr38.gr)
+cut10_flank.gr <- join_overlap_intersect(cut.gr, dmr38_flank.gr)
+
 # compile the results
 dmr.compile.df <- lapply(list(over1.gr, over2.gr, over3.gr, over4.gr, over5.gr, over6.gr, over7.gr, over8.gr, over9.gr, over10.gr), function(gr) {
   tmp <- as.data.frame(gr)
   }) %>% bind_rows() %>% arrange(seqnames, start)
 
-# compile the results
+cut.compile.df <- lapply(list(cut1.gr, cut2.gr, cut3.gr, cut4.gr, cut5.gr, cut6.gr, cut7.gr, cut8.gr, cut9.gr, cut10.gr), function(gr) {
+  tmp <- as.data.frame(gr)
+  }) %>% bind_rows() %>% arrange(seqnames, start)
+
+# compile the flank results
 dmr.compile.flank.df <- lapply(list(over1_flank.gr, over2_flank.gr, over3_flank.gr, over4_flank.gr, over5_flank.gr, over6_flank.gr, over7_flank.gr,
                                     over8_flank.gr, over9_flank.gr, over10_flank.gr), function(gr) {
   tmp <- as.data.frame(gr)
   }) %>% bind_rows() %>% arrange(seqnames, start)
 
+cut.compile.flank.df <- lapply(list(cut1_flank.gr, cut2_flank.gr, cut3_flank.gr, cut4_flank.gr, cut5_flank.gr, cut6_flank.gr, cut7_flank.gr,
+                                    cut8_flank.gr, cut9_flank.gr, cut10_flank.gr), function(gr) {
+  tmp <- as.data.frame(gr)
+  }) %>% bind_rows() %>% arrange(seqnames, start)
