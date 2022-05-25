@@ -17,7 +17,7 @@ file <- here("project","analysis","dkd","markers","dar.macs2.celltype.diab_vs_ct
 idents <- getSheetNames(file)
 dar.df <- lapply(idents, function(ident){
   df <- read.xlsx(file, sheet = ident, rowNames = TRUE) %>%
-    dplyr::filter(p_val_adj < 0.05, abs(avg_log2FC) > 0.1) %>%
+    dplyr::filter(p_val_adj < 0.05) %>%
     rownames_to_column(var = "peak")  
   if(nrow(df) > 0) { df$celltype <- ident }
     return(df)
