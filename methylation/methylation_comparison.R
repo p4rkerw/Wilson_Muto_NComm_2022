@@ -45,9 +45,11 @@ dmr.df$phenotype <- phenotype
 dmr.df <- tidyr::separate(dmr.df, col = peak, into = c("chrom","start","end"), sep = "-")
 dmr.gr <- makeGRangesFromDataFrame(dmr.df, keep.extra.columns=TRUE)
 dmr38.gr <- liftOver(dmr.gr, ch19) %>% unlist()
+dmr38_flank.gr <- flank(dmr38.gr, width=1000)
 
 # overlap with cell-specific DAR
 over1.gr <- join_overlap_intersect(dar.gr, dmr38.gr)
+over1_flank.gr <- join_overlap_intersect(dar.gr, dmr38_flank.gr)
 
 # Kidney cytosine methylation changes improve renal function decline estimation in patients with diabetic kidney disease
 # hg19
@@ -65,9 +67,11 @@ dmr.df$phenotype <- phenotype
 dmr.df <- tidyr::separate(dmr.df, col = peak, into = c("chrom","start","end"), sep = "-")
 dmr.gr <- makeGRangesFromDataFrame(dmr.df, keep.extra.columns=TRUE)
 dmr38.gr <- liftOver(dmr.gr, ch19) %>% unlist()
+dmr38_flank.gr <- flank(dmr38.gr, width=1000)
 
 # overlap with cell-specific DAR
 over2.gr <- join_overlap_intersect(dar.gr, dmr38.gr)
+over2_flank.gr <- join_overlap_intersect(dar.gr, dmr38_flank.gr)
 
 # Assessment of differentially methylated loci in individuals with end-stage kidney disease attributed to diabetic kidney disease: an exploratory study
 # PMID: 33933144
@@ -85,9 +89,11 @@ dmr.df <- tidyr::separate(dmr.df, col = peak, into = c("chrom","start","end"), s
 dmr.gr <- makeGRangesFromDataFrame(dmr.df, keep.extra.columns=TRUE)
 seqlevelsStyle(dmr.gr) <- "UCSC"
 dmr38.gr <- liftOver(dmr.gr, ch19) %>% unlist()
+dmr38_flank.gr <- flank(dmr38.gr, width=1000)
 
 # overlap with cell-specific DAR
 over3.gr <- join_overlap_intersect(dar.gr, dmr38.gr)
+over3_flank.gr <- join_overlap_intersect(dar.gr, dmr38_flank.gr)
 
 # Assessment of differentially methylated loci in individuals with end-stage kidney disease attributed to diabetic kidney disease: an exploratory study
 # PMID: 33933144
@@ -105,9 +111,11 @@ dmr.df <- tidyr::separate(dmr.df, col = peak, into = c("chrom","start","end"), s
 dmr.gr <- makeGRangesFromDataFrame(dmr.df, keep.extra.columns=TRUE)
 seqlevelsStyle(dmr.gr) <- "UCSC"
 dmr38.gr <- liftOver(dmr.gr, ch19) %>% unlist()
+dmr38_flank.gr <- flank(dmr38.gr, width=1000)
 
 # overlap with cell-specific DAR
 over4.gr <- join_overlap_intersect(dar.gr, dmr38.gr)
+over4_flank.gr <- join_overlap_intersect(dar.gr, dmr38_flank.gr)
 
 # Assessment of differentially methylated loci in individuals with end-stage kidney disease attributed to diabetic kidney disease: an exploratory study
 # PMID: 33933144
@@ -125,9 +133,11 @@ dmr.df <- tidyr::separate(dmr.df, col = peak, into = c("chrom","start","end"), s
 dmr.gr <- makeGRangesFromDataFrame(dmr.df, keep.extra.columns=TRUE)
 seqlevelsStyle(dmr.gr) <- "UCSC"
 dmr38.gr <- liftOver(dmr.gr, ch19) %>% unlist()
+dmr38_flank.gr <- flank(dmr38.gr, width=1000)
 
 # overlap with cell-specific DAR
 over5.gr <- join_overlap_intersect(dar.gr, dmr38.gr)
+over5_flank.gr <- join_overlap_intersect(dar.gr, dmr38_flank.gr)
 
 # Cytosine methylation changes in enhancer regions of core pro-fibrotic genes characterize kidney fibrosis development
 # PMID: 24098934
@@ -142,9 +152,11 @@ dmr.df$phenotype <- phenotype
 dmr.gr <- makeGRangesFromDataFrame(dmr.df, keep.extra.columns=TRUE)
 seqlevelsStyle(dmr.gr) <- "UCSC"
 dmr38.gr <- liftOver(dmr.gr, ch18) %>% unlist()
+dmr38_flank.gr <- flank(dmr38.gr, width=1000)
 
 # overlap with cell-specific DAR
 over6.gr <- join_overlap_intersect(dar.gr, dmr38.gr)
+over6_flank.gr <- join_overlap_intersect(dar.gr, dmr38_flank.gr)
 
 # Systematic integrated analysis of genetic and epigenetic variation in diabetic kidney disease
 # PMID: 33144501
@@ -162,9 +174,11 @@ dmr.df$phenotype <- phenotype
 dmr.gr <- makeGRangesFromDataFrame(dmr.df, keep.extra.columns=TRUE)
 seqlevelsStyle(dmr.gr) <- "UCSC"
 dmr38.gr <- liftOver(dmr.gr, ch19) %>% unlist()
+dmr38_flank.gr <- flank(dmr38.gr, width=1000)
 
 # overlap with cell-specific DAR
-over7.gr <- join_overlap_intersect(dar.gr, dmr38.gr) # no hits
+over7.gr <- join_overlap_intersect(dar.gr, dmr38.gr)
+over7_flank.gr <- join_overlap_intersect(dar.gr, dmr38_flank.gr)
 
 # Systematic integrated analysis of genetic and epigenetic variation in diabetic kidney disease
 # PMID: 33144501
@@ -182,9 +196,11 @@ dmr.df$phenotype <- phenotype
 dmr.gr <- makeGRangesFromDataFrame(dmr.df, keep.extra.columns=TRUE)
 seqlevelsStyle(dmr.gr) <- "UCSC"
 dmr38.gr <- liftOver(dmr.gr, ch19) %>% unlist()
+dmr38_flank.gr <- flank(dmr38.gr, width=1000)
 
 # overlap with cell-specific DAR
-over8.gr <- join_overlap_intersect(dar.gr, dmr38.gr) # n=4
+over8.gr <- join_overlap_intersect(dar.gr, dmr38.gr)
+over8_flank.gr <- join_overlap_intersect(dar.gr, dmr38_flank.gr)
 
 # Systematic integrated analysis of genetic and epigenetic variation in diabetic kidney disease
 # PMID: 33144501
@@ -202,9 +218,11 @@ dmr.df$phenotype <- phenotype
 dmr.gr <- makeGRangesFromDataFrame(dmr.df, keep.extra.columns=TRUE)
 seqlevelsStyle(dmr.gr) <- "UCSC"
 dmr38.gr <- liftOver(dmr.gr, ch19) %>% unlist()
+dmr38_flank.gr <- flank(dmr38.gr, width=1000)
 
 # overlap with cell-specific DAR
-over9.gr <- join_overlap_intersect(dar.gr, dmr38.gr) # no hits
+over9.gr <- join_overlap_intersect(dar.gr, dmr38.gr)
+over9_flank.gr <- join_overlap_intersect(dar.gr, dmr38_flank.gr)
 
 # DNA hypermethylation and DNA hypomethylation is present at different loci in chronic kidney disease
 # PMID: 24253112
@@ -224,12 +242,20 @@ dmr.df$phenotype <- phenotype
 dmr.gr <- makeGRangesFromDataFrame(dmr.df, keep.extra.columns=TRUE)
 seqlevelsStyle(dmr.gr) <- "UCSC"
 dmr38.gr <- liftOver(dmr.gr, ch19) %>% unlist()
+dmr38_flank.gr <- flank(dmr38.gr, width=1000)
 
 # overlap with cell-specific DAR
-over10.gr <- join_overlap_intersect(dar.gr, dmr38.gr) # no hits
+over10.gr <- join_overlap_intersect(dar.gr, dmr38.gr)
+over10_flank.gr <- join_overlap_intersect(dar.gr, dmr38_flank.gr)
 
 # compile the results
 dmr.compile.df <- lapply(list(over1.gr, over2.gr, over3.gr, over4.gr, over5.gr, over6.gr, over7.gr, over8.gr, over9.gr, over10.gr), function(gr) {
+  tmp <- as.data.frame(gr)
+  }) %>% bind_rows() %>% arrange(seqnames, start)
+
+# compile the results
+dmr.compile.flank.df <- lapply(list(over1_flank.gr, over2_flank.gr, over3_flank.gr, over4_flank.gr, over5_flank.gr, over6_flank.gr, over7_flank.gr,
+                                    over8_flank.gr, over9_flank.gr, over10_flank.gr), function(gr) {
   tmp <- as.data.frame(gr)
   }) %>% bind_rows() %>% arrange(seqnames, start)
 
