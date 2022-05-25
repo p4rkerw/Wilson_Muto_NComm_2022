@@ -6,6 +6,7 @@ library(GenomicRanges)
 library(plyranges)
 library(tibble)
 library(rtracklayer)
+library(Signac)
 
 
 # import liftover chains
@@ -45,7 +46,7 @@ dmr.df$phenotype <- phenotype
 dmr.df <- tidyr::separate(dmr.df, col = peak, into = c("chrom","start","end"), sep = "-")
 dmr.gr <- makeGRangesFromDataFrame(dmr.df, keep.extra.columns=TRUE)
 dmr38.gr <- liftOver(dmr.gr, ch19) %>% unlist()
-dmr38_flank.gr <- flank(dmr38.gr, width=1000)
+dmr38_flank.gr <- Extend(dmr38.gr, upstream=1000, downstream=1000)
 
 # overlap with cell-specific DAR
 over1.gr <- join_overlap_intersect(dar.gr, dmr38.gr)
@@ -67,7 +68,7 @@ dmr.df$phenotype <- phenotype
 dmr.df <- tidyr::separate(dmr.df, col = peak, into = c("chrom","start","end"), sep = "-")
 dmr.gr <- makeGRangesFromDataFrame(dmr.df, keep.extra.columns=TRUE)
 dmr38.gr <- liftOver(dmr.gr, ch19) %>% unlist()
-dmr38_flank.gr <- flank(dmr38.gr, width=1000)
+dmr38_flank.gr <- Extend(dmr38.gr, upstream=1000, downstream=1000)
 
 # overlap with cell-specific DAR
 over2.gr <- join_overlap_intersect(dar.gr, dmr38.gr)
@@ -89,7 +90,7 @@ dmr.df <- tidyr::separate(dmr.df, col = peak, into = c("chrom","start","end"), s
 dmr.gr <- makeGRangesFromDataFrame(dmr.df, keep.extra.columns=TRUE)
 seqlevelsStyle(dmr.gr) <- "UCSC"
 dmr38.gr <- liftOver(dmr.gr, ch19) %>% unlist()
-dmr38_flank.gr <- flank(dmr38.gr, width=1000)
+dmr38_flank.gr <- Extend(dmr38.gr, upstream=1000, downstream=1000)
 
 # overlap with cell-specific DAR
 over3.gr <- join_overlap_intersect(dar.gr, dmr38.gr)
@@ -111,7 +112,7 @@ dmr.df <- tidyr::separate(dmr.df, col = peak, into = c("chrom","start","end"), s
 dmr.gr <- makeGRangesFromDataFrame(dmr.df, keep.extra.columns=TRUE)
 seqlevelsStyle(dmr.gr) <- "UCSC"
 dmr38.gr <- liftOver(dmr.gr, ch19) %>% unlist()
-dmr38_flank.gr <- flank(dmr38.gr, width=1000)
+dmr38_flank.gr <- Extend(dmr38.gr, upstream=1000, downstream=1000)
 
 # overlap with cell-specific DAR
 over4.gr <- join_overlap_intersect(dar.gr, dmr38.gr)
@@ -133,7 +134,7 @@ dmr.df <- tidyr::separate(dmr.df, col = peak, into = c("chrom","start","end"), s
 dmr.gr <- makeGRangesFromDataFrame(dmr.df, keep.extra.columns=TRUE)
 seqlevelsStyle(dmr.gr) <- "UCSC"
 dmr38.gr <- liftOver(dmr.gr, ch19) %>% unlist()
-dmr38_flank.gr <- flank(dmr38.gr, width=1000)
+dmr38_flank.gr <- Extend(dmr38.gr, upstream=1000, downstream=1000)
 
 # overlap with cell-specific DAR
 over5.gr <- join_overlap_intersect(dar.gr, dmr38.gr)
@@ -152,7 +153,7 @@ dmr.df$phenotype <- phenotype
 dmr.gr <- makeGRangesFromDataFrame(dmr.df, keep.extra.columns=TRUE)
 seqlevelsStyle(dmr.gr) <- "UCSC"
 dmr38.gr <- liftOver(dmr.gr, ch18) %>% unlist()
-dmr38_flank.gr <- flank(dmr38.gr, width=1000)
+dmr38_flank.gr <- Extend(dmr38.gr, upstream=1000, downstream=1000)
 
 # overlap with cell-specific DAR
 over6.gr <- join_overlap_intersect(dar.gr, dmr38.gr)
@@ -174,7 +175,7 @@ dmr.df$phenotype <- phenotype
 dmr.gr <- makeGRangesFromDataFrame(dmr.df, keep.extra.columns=TRUE)
 seqlevelsStyle(dmr.gr) <- "UCSC"
 dmr38.gr <- liftOver(dmr.gr, ch19) %>% unlist()
-dmr38_flank.gr <- flank(dmr38.gr, width=1000)
+dmr38_flank.gr <- Extend(dmr38.gr, upstream=1000, downstream=1000)
 
 # overlap with cell-specific DAR
 over7.gr <- join_overlap_intersect(dar.gr, dmr38.gr)
@@ -196,7 +197,7 @@ dmr.df$phenotype <- phenotype
 dmr.gr <- makeGRangesFromDataFrame(dmr.df, keep.extra.columns=TRUE)
 seqlevelsStyle(dmr.gr) <- "UCSC"
 dmr38.gr <- liftOver(dmr.gr, ch19) %>% unlist()
-dmr38_flank.gr <- flank(dmr38.gr, width=1000)
+dmr38_flank.gr <- Extend(dmr38.gr, upstream=1000, downstream=1000)
 
 # overlap with cell-specific DAR
 over8.gr <- join_overlap_intersect(dar.gr, dmr38.gr)
@@ -218,7 +219,7 @@ dmr.df$phenotype <- phenotype
 dmr.gr <- makeGRangesFromDataFrame(dmr.df, keep.extra.columns=TRUE)
 seqlevelsStyle(dmr.gr) <- "UCSC"
 dmr38.gr <- liftOver(dmr.gr, ch19) %>% unlist()
-dmr38_flank.gr <- flank(dmr38.gr, width=1000)
+dmr38_flank.gr <- Extend(dmr38.gr, upstream=1000, downstream=1000)
 
 # overlap with cell-specific DAR
 over9.gr <- join_overlap_intersect(dar.gr, dmr38.gr)
@@ -242,7 +243,7 @@ dmr.df$phenotype <- phenotype
 dmr.gr <- makeGRangesFromDataFrame(dmr.df, keep.extra.columns=TRUE)
 seqlevelsStyle(dmr.gr) <- "UCSC"
 dmr38.gr <- liftOver(dmr.gr, ch19) %>% unlist()
-dmr38_flank.gr <- flank(dmr38.gr, width=1000)
+dmr38_flank.gr <- Extend(dmr38.gr, upstream=1000, downstream=1000)
 
 # overlap with cell-specific DAR
 over10.gr <- join_overlap_intersect(dar.gr, dmr38.gr)
