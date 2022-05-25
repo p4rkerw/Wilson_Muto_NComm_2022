@@ -8,6 +8,8 @@ library(tibble)
 library(rtracklayer)
 library(Signac)
 library(data.table)
+library(EnsDb.Hsapiens.v86)
+library(stringr)
 
 
 # import liftover chains
@@ -35,6 +37,20 @@ cut.gr <- fread(here("analysis","dkd","cut_and_run","kidney_GR_peaks.narrowPeak"
   dplyr::mutate(gr_peak = paste0(chrom,"-",start,"-",end)) %>%
   dplyr::select(chrom, start, end, gr_peak) %>%
   makeGRangesFromDataFrame(keep.extra.columns=TRUE)
+
+cut.gr <- keepStandardChromosomes(cut.gr, pruning.mode = 'coarse')
+
+# annotate with nearest gene
+gene.ranges <- genes(EnsDb.Hsapiens.v86)
+ucsc.levels <- str_replace(string=paste("chr",seqlevels(gene.ranges),sep=""), pattern="chrMT", replacement="chrM")
+seqlevels(gene.ranges) <- ucsc.levels
+gene.ranges <- gene.ranges[gene.ranges$gene_biotype == 'protein_coding', ]
+gene.ranges <- keepStandardChromosomes(gene.ranges, pruning.mode = 'coarse')
+
+nearest_feature <- distanceToNearest(cut.gr, subject = gene.ranges)
+feature_hits <- gene.ranges[subjectHits(x = nearest_feature)]
+df <- as.data.frame(x = mcols(x = feature_hits))
+cut.gr$gene <- df$symbol
 
 # Kidney cytosine methylation changes improve renal function decline estimation in patients with diabetic kidney disease
 # hg19
