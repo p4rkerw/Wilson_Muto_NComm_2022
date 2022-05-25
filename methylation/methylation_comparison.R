@@ -146,10 +146,90 @@ dmr38.gr <- liftOver(dmr.gr, ch18) %>% unlist()
 # overlap with cell-specific DAR
 over6.gr <- join_overlap_intersect(dar.gr, dmr38.gr)
 
+# Systematic integrated analysis of genetic and epigenetic variation in diabetic kidney disease
+# PMID: 33144501
+# hg19
+# Supplemental Table 3: DNA methylation sites associated with albuminuria
+study_id <- "pmid33144501"
+phenotype <- "dkd_albuminuria"
+dmr.df <- read.xlsx(here("analysis","dkd","methylation","pnas.2005905117.sd03.xlsx"), startRow = 3) %>%
+  dplyr::select(chromosome, `Position.(b37)`) %>%
+  dplyr::rename(chrom = chromosome) %>%
+  dplyr::rename(start = `Position.(b37)`) %>%
+  dplyr::mutate(end = start)
+dmr.df$study_id <- study_id
+dmr.df$phenotype <- phenotype
+dmr.gr <- makeGRangesFromDataFrame(dmr.df, keep.extra.columns=TRUE)
+seqlevelsStyle(dmr.gr) <- "UCSC"
+dmr38.gr <- liftOver(dmr.gr, ch19) %>% unlist()
 
+# overlap with cell-specific DAR
+over7.gr <- join_overlap_intersect(dar.gr, dmr38.gr) # no hits
+
+# Systematic integrated analysis of genetic and epigenetic variation in diabetic kidney disease
+# PMID: 33144501
+# hg19
+# Supplemental Table 3: DNA methylation sites associated with albuminuria
+study_id <- "pmid33144501"
+phenotype <- "dkd_eGFR"
+dmr.df <- read.xlsx(here("analysis","dkd","methylation","pnas.2005905117.sd04.xlsx"), startRow = 3) %>%
+  dplyr::select(chromosome, `Position.(b37)`) %>%
+  dplyr::rename(chrom = chromosome) %>%
+  dplyr::rename(start = `Position.(b37)`) %>%
+  dplyr::mutate(end = start)
+dmr.df$study_id <- study_id
+dmr.df$phenotype <- phenotype
+dmr.gr <- makeGRangesFromDataFrame(dmr.df, keep.extra.columns=TRUE)
+seqlevelsStyle(dmr.gr) <- "UCSC"
+dmr38.gr <- liftOver(dmr.gr, ch19) %>% unlist()
+
+# overlap with cell-specific DAR
+over8.gr <- join_overlap_intersect(dar.gr, dmr38.gr) # n=4
+
+# Systematic integrated analysis of genetic and epigenetic variation in diabetic kidney disease
+# PMID: 33144501
+# hg19
+# Supplemental Table 3: DNA methylation sites associated with albuminuria
+study_id <- "pmid33144501"
+phenotype <- "dkd_eGFR"
+dmr.df <- read.xlsx(here("analysis","dkd","methylation","pnas.2005905117.sd05.xlsx"), startRow = 3) %>%
+  dplyr::select(chromosome, `Position.(b37)`) %>%
+  dplyr::rename(chrom = chromosome) %>%
+  dplyr::rename(start = `Position.(b37)`) %>%
+  dplyr::mutate(end = start)
+dmr.df$study_id <- study_id
+dmr.df$phenotype <- phenotype
+dmr.gr <- makeGRangesFromDataFrame(dmr.df, keep.extra.columns=TRUE)
+seqlevelsStyle(dmr.gr) <- "UCSC"
+dmr38.gr <- liftOver(dmr.gr, ch19) %>% unlist()
+
+# overlap with cell-specific DAR
+over9.gr <- join_overlap_intersect(dar.gr, dmr38.gr) # no hits
+
+# DNA hypermethylation and DNA hypomethylation is present at different loci in chronic kidney disease
+# PMID: 24253112
+# hg19
+# Supplemental Table 2: Top ranked markers in genes of interest where multiple CpG’s affected per gene
+# table reformatted from pdf
+study_id <- "pmid24253112"
+phenotype <- "ckd"
+dmr.df <- read.csv(here("analysis","dkd","methylation","pmid24253112.st2.csv"), header=FALSE) %>%
+  dplyr::rename(position = V3) %>%
+  dplyr::rename(gene = V2) %>%
+  tidyr::separate(col = position, into = c("chrom","start"), sep = c(":")) %>%
+  dplyr::mutate(end = start) %>%
+  dplyr::select(chrom, start, end)
+dmr.df$study_id <- study_id
+dmr.df$phenotype <- phenotype
+dmr.gr <- makeGRangesFromDataFrame(dmr.df, keep.extra.columns=TRUE)
+seqlevelsStyle(dmr.gr) <- "UCSC"
+dmr38.gr <- liftOver(dmr.gr, ch19) %>% unlist()
+
+# overlap with cell-specific DAR
+over10.gr <- join_overlap_intersect(dar.gr, dmr38.gr) # no hits
 
 # compile the results
-dmr.compile.df <- lapply(list(over1.gr, over2.gr, over3.gr, over4.gr, over5.gr, over6.gr), function(gr) {
+dmr.compile.df <- lapply(list(over1.gr, over2.gr, over3.gr, over4.gr, over5.gr, over6.gr, over7.gr, over8.gr, over9.gr, over10.gr), function(gr) {
   tmp <- as.data.frame(gr)
   }) %>% bind_rows() %>% arrange(seqnames, start)
 
