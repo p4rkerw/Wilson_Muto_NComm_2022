@@ -17,7 +17,7 @@ ch19 = import.chain("G:/diabneph/analysis/dkd/methylation/hg19ToHg38.over.chain"
 ch18 = import.chain("G:/diabneph/analysis/dkd/methylation/hg18ToHg38.over.chain")
 
 # read in DAR
-file <- here("project","analysis","dkd","markers","dar.macs2.celltype.diab_vs_ctrl.xlsx")
+file <- here("analysis","dkd","markers","dar.macs2.celltype.diab_vs_ctrl.xlsx")
 idents <- getSheetNames(file)
 dar.df <- lapply(idents, function(ident){
   df <- read.xlsx(file, sheet = ident, rowNames = TRUE) %>%
@@ -341,7 +341,7 @@ dmr.df <- read.csv(here("analysis","dkd","methylation","pmid24253112.st2.csv"), 
   tidyr::separate(col = position, into = c("chrom","start"), sep = c(":")) %>%
   dplyr::mutate(end = start) %>%
   dplyr::select(chrom, start, end) %>%
-  dplyr::mutate(dmr = paste0("chr",chrom,"-",start,"-",end))
+  dplyr::mutate(dmr = paste0(chrom,"-",start,"-",end))
 dmr.df$study_id <- study_id
 dmr.df$phenotype <- phenotype
 dmr.gr <- makeGRangesFromDataFrame(dmr.df, keep.extra.columns=TRUE)
@@ -375,6 +375,11 @@ rptec.compile.df <- lapply(list(rptec1.gr, rptec2.gr, rptec3.gr, rptec4.gr, rpte
 # compile the flank results
 dmr.compile.flank.df <- lapply(list(over1_flank.gr, over2_flank.gr, over3_flank.gr, over4_flank.gr, over5_flank.gr, over6_flank.gr, over7_flank.gr,
                                     over8_flank.gr, over9_flank.gr, over10_flank.gr), function(gr) {
+  tmp <- as.data.frame(gr)
+  }) %>% bind_rows() %>% arrange(seqnames, start)
+
+bulk.compile.flank.df <- lapply(list(bulk1_flank.gr, bulk2_flank.gr, bulk3_flank.gr, bulk4_flank.gr, bulk5_flank.gr, bulk6_flank.gr, bulk7_flank.gr,
+                                    bulk8_flank.gr, bulk9_flank.gr, bulk10_flank.gr), function(gr) {
   tmp <- as.data.frame(gr)
   }) %>% bind_rows() %>% arrange(seqnames, start)
 
