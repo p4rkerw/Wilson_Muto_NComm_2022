@@ -173,6 +173,16 @@ tcre.gr <- fread(file) %>%
   makeGRangesFromDataFrame()
 tcre.gr <- join_overlap_intersect(tcre.gr, plot.gr)
 
+file <- here("project","analysis","dkd","methylation","ST19_intersection_DMR_with_DAR_and_GR_cut_and_run.xlsx")
+dmr.gr <- read.xlsx(file, sheet = "ALL_DMR") %>%
+  distinct(seqnames, start, end, dmr) %>%
+  makeGRangesFromDataFrame(keep.extra.columns=TRUE)
+
+dmr.gr <- join_overlap_intersect(dmr.gr, plot.gr)
+
+# make dmr a little wider to visualize in coverageplot
+dmr_flank.gr <- Extend(dmr.gr, upstream=100, downstream=100)
+
 # intersect peaks with plotting region
 peaks_to_plot.gr <- join_overlap_intersect(peaks.gr, plot.gr)
 
@@ -186,9 +196,10 @@ cp <- CoveragePlot(atacAggr,
 peaks.plot <- PeakPlot(atacAggr, region=region, peaks=peaks_to_plot.gr)
 tcre.plot <- PeakPlot(atacAggr, region = region, peaks=tcre.gr)
 dar.plot <- PeakPlot(atacAggr, region = region, peaks=dar.gr)
+dmr.plot <- PeakPlot(atacAggr, region=region, peaks=dmr_flank.gr, color="blue")
 gr.plot <- PeakPlot(atacAggr, region = region, peaks=GRpeak.gr)
 ccan.plot <- LinkPlot(atacAggr, region= region, min.cutoff=0.2)
-plot <- CombineTracks(list(cp, peaks.plot, tcre.plot, dar.plot, gr.plot, ccan.plot))
+plot <- CombineTracks(list(cp, peaks.plot, tcre.plot, dar.plot, gr.plot, dmr.plot, ccan.plot))
 
 pdf(here(figures, "figure3_vcam1.pdf"))
 print(plot)
