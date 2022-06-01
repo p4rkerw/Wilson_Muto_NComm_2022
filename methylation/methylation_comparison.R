@@ -84,18 +84,18 @@ dmr.df$study_id <- study_id
 dmr.df$phenotype <- phenotype
 dmr.df <- tidyr::separate(dmr.df, col = dmr, into = c("chrom","start","end"), sep = "-", remove=FALSE)
 dmr.gr <- makeGRangesFromDataFrame(dmr.df, keep.extra.columns=TRUE)
-dmr38.gr <- liftOver(dmr.gr, ch19) %>% unlist()
-dmr38_flank.gr <- Extend(dmr38.gr, upstream=1000, downstream=1000)
+dmr38_1.gr <- liftOver(dmr.gr, ch19) %>% unlist()
+dmr38_1_flank.gr <- Extend(dmr38_1.gr, upstream=1000, downstream=1000)
 
 # overlap with cell-specific DAR
-over1.gr <- join_overlap_intersect(dar.gr, dmr38.gr)
-over1_flank.gr <- join_overlap_intersect(dar.gr, dmr38_flank.gr)
+over1.gr <- join_overlap_intersect(dar.gr, dmr38_1.gr)
+over1_flank.gr <- join_overlap_intersect(dar.gr, dmr38_1_flank.gr)
 
 # overlap with GR cut and run peaks
-bulk1.gr <- join_overlap_intersect(bulk.gr, dmr38.gr)
-bulk1_flank.gr <- join_overlap_intersect(bulk.gr, dmr38_flank.gr)
-rptec1.gr <- join_overlap_intersect(rptec.gr, dmr38.gr)
-rptec1_flank.gr <- join_overlap_intersect(rptec.gr, dmr38_flank.gr)
+bulk1.gr <- join_overlap_intersect(bulk.gr, dmr38_1.gr)
+bulk1_flank.gr <- join_overlap_intersect(bulk.gr, dmr38_1_flank.gr)
+rptec1.gr <- join_overlap_intersect(rptec.gr, dmr38_1.gr)
+rptec1_flank.gr <- join_overlap_intersect(rptec.gr, dmr38_1_flank.gr)
 
 # Kidney cytosine methylation changes improve renal function decline estimation in patients with diabetic kidney disease
 # hg19
@@ -112,18 +112,18 @@ dmr.df$study_id <- study_id
 dmr.df$phenotype <- phenotype
 dmr.df <- tidyr::separate(dmr.df, col = dmr, into = c("chrom","start","end"), sep = "-", remove=FALSE)
 dmr.gr <- makeGRangesFromDataFrame(dmr.df, keep.extra.columns=TRUE)
-dmr38.gr <- liftOver(dmr.gr, ch19) %>% unlist()
-dmr38_flank.gr <- Extend(dmr38.gr, upstream=1000, downstream=1000)
+dmr38_2.gr <- liftOver(dmr.gr, ch19) %>% unlist()
+dmr38_2_flank.gr <- Extend(dmr38_2.gr, upstream=1000, downstream=1000)
 
 # overlap with cell-specific DAR
-over2.gr <- join_overlap_intersect(dar.gr, dmr38.gr)
-over2_flank.gr <- join_overlap_intersect(dar.gr, dmr38_flank.gr)
+over2.gr <- join_overlap_intersect(dar.gr, dmr38_2.gr)
+over2_flank.gr <- join_overlap_intersect(dar.gr, dmr38_2_flank.gr)
 
 # overlap with GR cut and run peaks
-bulk2.gr <- join_overlap_intersect(bulk.gr, dmr38.gr)
-bulk2_flank.gr <- join_overlap_intersect(bulk.gr, dmr38_flank.gr)
-rptec2.gr <- join_overlap_intersect(rptec.gr, dmr38.gr)
-rptec2_flank.gr <- join_overlap_intersect(rptec.gr, dmr38_flank.gr)
+bulk2.gr <- join_overlap_intersect(bulk.gr, dmr38_2.gr)
+bulk2_flank.gr <- join_overlap_intersect(bulk.gr, dmr38_2_flank.gr)
+rptec2.gr <- join_overlap_intersect(rptec.gr, dmr38_2.gr)
+rptec2_flank.gr <- join_overlap_intersect(rptec.gr, dmr38_2_flank.gr)
 
 # Assessment of differentially methylated loci in individuals with end-stage kidney disease attributed to diabetic kidney disease: an exploratory study
 # PMID: 33933144
@@ -142,18 +142,18 @@ dmr.df <- tidyr::separate(dmr.df, col = dmr, into = c("chrom","start","end"), se
   mutate(dmr = paste0("chr",dmr)) 
 dmr.gr <- makeGRangesFromDataFrame(dmr.df, keep.extra.columns=TRUE)
 seqlevelsStyle(dmr.gr) <- "UCSC"
-dmr38.gr <- liftOver(dmr.gr, ch19) %>% unlist()
-dmr38_flank.gr <- Extend(dmr38.gr, upstream=1000, downstream=1000)
+dmr38_3.gr <- liftOver(dmr.gr, ch19) %>% unlist()
+dmr38_3_flank.gr <- Extend(dmr38_3.gr, upstream=1000, downstream=1000)
 
 # overlap with cell-specific DAR
-over3.gr <- join_overlap_intersect(dar.gr, dmr38.gr)
-over3_flank.gr <- join_overlap_intersect(dar.gr, dmr38_flank.gr)
+over3.gr <- join_overlap_intersect(dar.gr, dmr38_3.gr)
+over3_flank.gr <- join_overlap_intersect(dar.gr, dmr38_3_flank.gr)
 
 # overlap with GR cut and run peaks
-bulk3.gr <- join_overlap_intersect(bulk.gr, dmr38.gr)
-bulk3_flank.gr <- join_overlap_intersect(bulk.gr, dmr38_flank.gr)
-rptec3.gr <- join_overlap_intersect(rptec.gr, dmr38.gr)
-rptec3_flank.gr <- join_overlap_intersect(rptec.gr, dmr38_flank.gr)
+bulk3.gr <- join_overlap_intersect(bulk.gr, dmr38_3.gr)
+bulk3_flank.gr <- join_overlap_intersect(bulk.gr, dmr38_3_flank.gr)
+rptec3.gr <- join_overlap_intersect(rptec.gr, dmr38_3.gr)
+rptec3_flank.gr <- join_overlap_intersect(rptec.gr, dmr38_3_flank.gr)
 
 # Assessment of differentially methylated loci in individuals with end-stage kidney disease attributed to diabetic kidney disease: an exploratory study
 # PMID: 33933144
@@ -172,18 +172,18 @@ dmr.df <- tidyr::separate(dmr.df, col = dmr, into = c("chrom","start","end"), se
   mutate(dmr = paste0("chr",dmr)) 
 dmr.gr <- makeGRangesFromDataFrame(dmr.df, keep.extra.columns=TRUE)
 seqlevelsStyle(dmr.gr) <- "UCSC"
-dmr38.gr <- liftOver(dmr.gr, ch19) %>% unlist()
-dmr38_flank.gr <- Extend(dmr38.gr, upstream=1000, downstream=1000)
+dmr38_4.gr <- liftOver(dmr.gr, ch19) %>% unlist()
+dmr38_4_flank.gr <- Extend(dmr38_4.gr, upstream=1000, downstream=1000)
 
 # overlap with cell-specific DAR
-over4.gr <- join_overlap_intersect(dar.gr, dmr38.gr)
-over4_flank.gr <- join_overlap_intersect(dar.gr, dmr38_flank.gr)
+over4.gr <- join_overlap_intersect(dar.gr, dmr38_4.gr)
+over4_flank.gr <- join_overlap_intersect(dar.gr, dmr38_4_flank.gr)
 
 # overlap with GR cut and run peaks
-bulk4.gr <- join_overlap_intersect(bulk.gr, dmr38.gr)
-bulk4_flank.gr <- join_overlap_intersect(bulk.gr, dmr38_flank.gr)
-rptec4.gr <- join_overlap_intersect(rptec.gr, dmr38.gr)
-rptec4_flank.gr <- join_overlap_intersect(rptec.gr, dmr38_flank.gr)
+bulk4.gr <- join_overlap_intersect(bulk.gr, dmr38_4.gr)
+bulk4_flank.gr <- join_overlap_intersect(bulk.gr, dmr38_4_flank.gr)
+rptec4.gr <- join_overlap_intersect(rptec.gr, dmr38_4.gr)
+rptec4_flank.gr <- join_overlap_intersect(rptec.gr, dmr38_4_flank.gr)
 
 # Assessment of differentially methylated loci in individuals with end-stage kidney disease attributed to diabetic kidney disease: an exploratory study
 # PMID: 33933144
@@ -202,18 +202,18 @@ dmr.df <- tidyr::separate(dmr.df, col = dmr, into = c("chrom","start","end"), se
   mutate(dmr = paste0("chr",dmr)) 
 dmr.gr <- makeGRangesFromDataFrame(dmr.df, keep.extra.columns=TRUE)
 seqlevelsStyle(dmr.gr) <- "UCSC"
-dmr38.gr <- liftOver(dmr.gr, ch19) %>% unlist()
-dmr38_flank.gr <- Extend(dmr38.gr, upstream=1000, downstream=1000)
+dmr38_5.gr <- liftOver(dmr.gr, ch19) %>% unlist()
+dmr38_5_flank.gr <- Extend(dmr38_5.gr, upstream=1000, downstream=1000)
 
 # overlap with cell-specific DAR
-over5.gr <- join_overlap_intersect(dar.gr, dmr38.gr)
-over5_flank.gr <- join_overlap_intersect(dar.gr, dmr38_flank.gr)
+over5.gr <- join_overlap_intersect(dar.gr, dmr38_5.gr)
+over5_flank.gr <- join_overlap_intersect(dar.gr, dmr38_5_flank.gr)
 
 # overlap with GR cut and run peaks
-bulk5.gr <- join_overlap_intersect(bulk.gr, dmr38.gr)
-bulk5_flank.gr <- join_overlap_intersect(bulk.gr, dmr38_flank.gr)
-rptec5.gr <- join_overlap_intersect(rptec.gr, dmr38.gr)
-rptec5_flank.gr <- join_overlap_intersect(rptec.gr, dmr38_flank.gr)
+bulk5.gr <- join_overlap_intersect(bulk.gr, dmr38_5.gr)
+bulk5_flank.gr <- join_overlap_intersect(bulk.gr, dmr38_5_flank.gr)
+rptec5.gr <- join_overlap_intersect(rptec.gr, dmr38_5.gr)
+rptec5_flank.gr <- join_overlap_intersect(rptec.gr, dmr38_5_flank.gr)
 
 # Cytosine methylation changes in enhancer regions of core pro-fibrotic genes characterize kidney fibrosis development
 # PMID: 24098934
@@ -228,18 +228,18 @@ dmr.df$study_id <- study_id
 dmr.df$phenotype <- phenotype
 dmr.gr <- makeGRangesFromDataFrame(dmr.df, keep.extra.columns=TRUE)
 seqlevelsStyle(dmr.gr) <- "UCSC"
-dmr38.gr <- liftOver(dmr.gr, ch18) %>% unlist()
-dmr38_flank.gr <- Extend(dmr38.gr, upstream=1000, downstream=1000)
+dmr38_6.gr <- liftOver(dmr.gr, ch18) %>% unlist()
+dmr38_6_flank.gr <- Extend(dmr38_6.gr, upstream=1000, downstream=1000)
 
 # overlap with cell-specific DAR
-over6.gr <- join_overlap_intersect(dar.gr, dmr38.gr)
-over6_flank.gr <- join_overlap_intersect(dar.gr, dmr38_flank.gr)
+over6.gr <- join_overlap_intersect(dar.gr, dmr38_6.gr)
+over6_flank.gr <- join_overlap_intersect(dar.gr, dmr38_6_flank.gr)
 
 # overlap with GR cut and run peaks
-bulk6.gr <- join_overlap_intersect(bulk.gr, dmr38.gr)
-bulk6_flank.gr <- join_overlap_intersect(bulk.gr, dmr38_flank.gr)
-rptec6.gr <- join_overlap_intersect(rptec.gr, dmr38.gr)
-rptec6_flank.gr <- join_overlap_intersect(rptec.gr, dmr38_flank.gr)
+bulk6.gr <- join_overlap_intersect(bulk.gr, dmr38_6.gr)
+bulk6_flank.gr <- join_overlap_intersect(bulk.gr, dmr38_6_flank.gr)
+rptec6.gr <- join_overlap_intersect(rptec.gr, dmr38_6.gr)
+rptec6_flank.gr <- join_overlap_intersect(rptec.gr, dmr38_6_flank.gr)
 
 # Systematic integrated analysis of genetic and epigenetic variation in diabetic kidney disease
 # PMID: 33144501
@@ -257,18 +257,18 @@ dmr.df$study_id <- study_id
 dmr.df$phenotype <- phenotype
 dmr.gr <- makeGRangesFromDataFrame(dmr.df, keep.extra.columns=TRUE)
 seqlevelsStyle(dmr.gr) <- "UCSC"
-dmr38.gr <- liftOver(dmr.gr, ch19) %>% unlist()
-dmr38_flank.gr <- Extend(dmr38.gr, upstream=1000, downstream=1000)
+dmr38_7.gr <- liftOver(dmr.gr, ch19) %>% unlist()
+dmr38_7_flank.gr <- Extend(dmr38_7.gr, upstream=1000, downstream=1000)
 
 # overlap with cell-specific DAR
-over7.gr <- join_overlap_intersect(dar.gr, dmr38.gr)
-over7_flank.gr <- join_overlap_intersect(dar.gr, dmr38_flank.gr)
+over7.gr <- join_overlap_intersect(dar.gr, dmr38_7.gr)
+over7_flank.gr <- join_overlap_intersect(dar.gr, dmr38_7_flank.gr)
 
 # overlap with GR cut and run peaks
-bulk7.gr <- join_overlap_intersect(bulk.gr, dmr38.gr)
-bulk7_flank.gr <- join_overlap_intersect(bulk.gr, dmr38_flank.gr)
-rptec7.gr <- join_overlap_intersect(rptec.gr, dmr38.gr)
-rptec7_flank.gr <- join_overlap_intersect(rptec.gr, dmr38_flank.gr)
+bulk7.gr <- join_overlap_intersect(bulk.gr, dmr38_7.gr)
+bulk7_flank.gr <- join_overlap_intersect(bulk.gr, dmr38_7_flank.gr)
+rptec7.gr <- join_overlap_intersect(rptec.gr, dmr38_7.gr)
+rptec7_flank.gr <- join_overlap_intersect(rptec.gr, dmr38_7_flank.gr)
 
 # Systematic integrated analysis of genetic and epigenetic variation in diabetic kidney disease
 # PMID: 33144501
@@ -286,18 +286,18 @@ dmr.df$study_id <- study_id
 dmr.df$phenotype <- phenotype
 dmr.gr <- makeGRangesFromDataFrame(dmr.df, keep.extra.columns=TRUE)
 seqlevelsStyle(dmr.gr) <- "UCSC"
-dmr38.gr <- liftOver(dmr.gr, ch19) %>% unlist()
-dmr38_flank.gr <- Extend(dmr38.gr, upstream=1000, downstream=1000)
+dmr38_8.gr <- liftOver(dmr.gr, ch19) %>% unlist()
+dmr38_8_flank.gr <- Extend(dmr38_8.gr, upstream=1000, downstream=1000)
 
 # overlap with cell-specific DAR
-over8.gr <- join_overlap_intersect(dar.gr, dmr38.gr)
-over8_flank.gr <- join_overlap_intersect(dar.gr, dmr38_flank.gr)
+over8.gr <- join_overlap_intersect(dar.gr, dmr38_8.gr)
+over8_flank.gr <- join_overlap_intersect(dar.gr, dmr38_8_flank.gr)
 
 # overlap with GR cut and run peaks
-bulk8.gr <- join_overlap_intersect(bulk.gr, dmr38.gr)
-bulk8_flank.gr <- join_overlap_intersect(bulk.gr, dmr38_flank.gr)
-rptec8.gr <- join_overlap_intersect(rptec.gr, dmr38.gr)
-rptec8_flank.gr <- join_overlap_intersect(rptec.gr, dmr38_flank.gr)
+bulk8.gr <- join_overlap_intersect(bulk.gr, dmr38_8.gr)
+bulk8_flank.gr <- join_overlap_intersect(bulk.gr, dmr38_8_flank.gr)
+rptec8.gr <- join_overlap_intersect(rptec.gr, dmr38_8.gr)
+rptec8_flank.gr <- join_overlap_intersect(rptec.gr, dmr38_8_flank.gr)
 
 # Systematic integrated analysis of genetic and epigenetic variation in diabetic kidney disease
 # PMID: 33144501
@@ -315,18 +315,18 @@ dmr.df$study_id <- study_id
 dmr.df$phenotype <- phenotype
 dmr.gr <- makeGRangesFromDataFrame(dmr.df, keep.extra.columns=TRUE)
 seqlevelsStyle(dmr.gr) <- "UCSC"
-dmr38.gr <- liftOver(dmr.gr, ch19) %>% unlist()
-dmr38_flank.gr <- Extend(dmr38.gr, upstream=1000, downstream=1000)
+dmr38_9.gr <- liftOver(dmr.gr, ch19) %>% unlist()
+dmr38_9_flank.gr <- Extend(dmr38_9.gr, upstream=1000, downstream=1000)
 
 # overlap with cell-specific DAR
-over9.gr <- join_overlap_intersect(dar.gr, dmr38.gr)
-over9_flank.gr <- join_overlap_intersect(dar.gr, dmr38_flank.gr)
+over9.gr <- join_overlap_intersect(dar.gr, dmr38_9.gr)
+over9_flank.gr <- join_overlap_intersect(dar.gr, dmr38_9_flank.gr)
 
 # overlap with GR cut and run peaks
-bulk9.gr <- join_overlap_intersect(bulk.gr, dmr38.gr)
-bulk9_flank.gr <- join_overlap_intersect(bulk.gr, dmr38_flank.gr)
-rptec9.gr <- join_overlap_intersect(rptec.gr, dmr38.gr)
-rptec9_flank.gr <- join_overlap_intersect(rptec.gr, dmr38_flank.gr)
+bulk9.gr <- join_overlap_intersect(bulk.gr, dmr38_9.gr)
+bulk9_flank.gr <- join_overlap_intersect(bulk.gr, dmr38_9_flank.gr)
+rptec9.gr <- join_overlap_intersect(rptec.gr, dmr38_9.gr)
+rptec9_flank.gr <- join_overlap_intersect(rptec.gr, dmr38_9_flank.gr)
 
 # DNA hypermethylation and DNA hypomethylation is present at different loci in chronic kidney disease
 # PMID: 24253112
@@ -346,18 +346,18 @@ dmr.df$study_id <- study_id
 dmr.df$phenotype <- phenotype
 dmr.gr <- makeGRangesFromDataFrame(dmr.df, keep.extra.columns=TRUE)
 seqlevelsStyle(dmr.gr) <- "UCSC"
-dmr38.gr <- liftOver(dmr.gr, ch19) %>% unlist()
-dmr38_flank.gr <- Extend(dmr38.gr, upstream=1000, downstream=1000)
+dmr38_10.gr <- liftOver(dmr.gr, ch19) %>% unlist()
+dmr38_10_flank.gr <- Extend(dmr38_10.gr, upstream=1000, downstream=1000)
 
 # overlap with cell-specific DAR
-over10.gr <- join_overlap_intersect(dar.gr, dmr38.gr)
-over10_flank.gr <- join_overlap_intersect(dar.gr, dmr38_flank.gr)
+over10.gr <- join_overlap_intersect(dar.gr, dmr38_10.gr)
+over10_flank.gr <- join_overlap_intersect(dar.gr, dmr38_10_flank.gr)
 
 # overlap with GR cut and run peaks
-bulk10.gr <- join_overlap_intersect(bulk.gr, dmr38.gr)
-bulk10_flank.gr <- join_overlap_intersect(bulk.gr, dmr38_flank.gr)
-rptec10.gr <- join_overlap_intersect(rptec.gr, dmr38.gr)
-rptec10_flank.gr <- join_overlap_intersect(rptec.gr, dmr38_flank.gr)
+bulk10.gr <- join_overlap_intersect(bulk.gr, dmr38_10.gr)
+bulk10_flank.gr <- join_overlap_intersect(bulk.gr, dmr38_10_flank.gr)
+rptec10.gr <- join_overlap_intersect(rptec.gr, dmr38_10.gr)
+rptec10_flank.gr <- join_overlap_intersect(rptec.gr, dmr38_10_flank.gr)
 
 # compile the results
 dmr.compile.df <- lapply(list(over1.gr, over2.gr, over3.gr, over4.gr, over5.gr, over6.gr, over7.gr, over8.gr, over9.gr, over10.gr), function(gr) {
@@ -372,8 +372,14 @@ rptec.compile.df <- lapply(list(rptec1.gr, rptec2.gr, rptec3.gr, rptec4.gr, rpte
   tmp <- as.data.frame(gr)
   }) %>% bind_rows() %>% arrange(seqnames, start)
 
+# compile all dmr
+dmr.compile.flank.df <- lapply(list(dmr38_1.gr, dmr38_2.gr, dmr38_3.gr, dmr38_4.gr, dmr38_5.gr, dmr38_6.gr, dmr38_7.gr,
+                                    dmr38_8.gr, dmr38_9.gr, dmr38_10.gr), function(gr) {
+  tmp <- as.data.frame(gr)
+  }) %>% bind_rows() %>% arrange(seqnames, start)
+
 # compile the flank results
-dmr.compile.flank.df <- lapply(list(over1_flank.gr, over2_flank.gr, over3_flank.gr, over4_flank.gr, over5_flank.gr, over6_flank.gr, over7_flank.gr,
+dar.compile.flank.df <- lapply(list(over1_flank.gr, over2_flank.gr, over3_flank.gr, over4_flank.gr, over5_flank.gr, over6_flank.gr, over7_flank.gr,
                                     over8_flank.gr, over9_flank.gr, over10_flank.gr), function(gr) {
   tmp <- as.data.frame(gr)
   }) %>% bind_rows() %>% arrange(seqnames, start)
