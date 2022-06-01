@@ -373,7 +373,7 @@ rptec.compile.df <- lapply(list(rptec1.gr, rptec2.gr, rptec3.gr, rptec4.gr, rpte
   }) %>% bind_rows() %>% arrange(seqnames, start)
 
 # compile all dmr
-dmr.compile.flank.df <- lapply(list(dmr38_1.gr, dmr38_2.gr, dmr38_3.gr, dmr38_4.gr, dmr38_5.gr, dmr38_6.gr, dmr38_7.gr,
+dmr.compile.df <- lapply(list(dmr38_1.gr, dmr38_2.gr, dmr38_3.gr, dmr38_4.gr, dmr38_5.gr, dmr38_6.gr, dmr38_7.gr,
                                     dmr38_8.gr, dmr38_9.gr, dmr38_10.gr), function(gr) {
   tmp <- as.data.frame(gr)
   }) %>% bind_rows() %>% arrange(seqnames, start)
