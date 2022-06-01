@@ -282,9 +282,21 @@ pdf(here(figures, "figure1e_coverage.pdf"))
 print(p5)
 dev.off()
 
+# read in DMR
+file <- here("project","analysis","dkd","methylation","ST19_intersection_DMR_with_DAR_and_GR_cut_and_run.xlsx")
+dmr.gr <- read.xlsx(file, sheet = "ALL_DMR") %>%
+  distinct(seqnames, start, end) %>%
+  makeGRangesFromDataFrame()
+
+dmr.gr <- join_overlap_intersect(dmr.gr, plot.gr)
+
+# make dmr a little wider to visualize in coverageplot
+dmr_flank.gr <- Extend(dmr.gr, upstream=100, downstream=100)
+dmr.plot <- PeakPlot(atacAggr, region=region, peaks=dmr_flank.gr, color="blue")
+
 # # add multiple tracks together (have to use genomic coordinates rather than gene name here)
 p6 <- LinkPlot(atacAggr, region="chr19-7112255-7293931", min.cutoff=0.4)
-p7 <- CombineTracks(list(p5, p6))
+p7 <- CombineTracks(list(p5, dmr.plot, p6))
 
 # this will print coverage plot with the links
 pdf(here(figures, "figure1e.pdf"))
