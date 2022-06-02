@@ -360,23 +360,27 @@ rptec10.gr <- join_overlap_intersect(rptec.gr, dmr38_10.gr)
 rptec10_flank.gr <- join_overlap_intersect(rptec.gr, dmr38_10_flank.gr)
 
 # compile the results
-dmr.compile.df <- lapply(list(over1.gr, over2.gr, over3.gr, over4.gr, over5.gr, over6.gr, over7.gr, over8.gr, over9.gr, over10.gr), function(gr) {
-  tmp <- as.data.frame(gr)
-  }) %>% bind_rows() %>% arrange(seqnames, start)
-
-bulk.compile.df <- lapply(list(bulk1.gr, bulk2.gr, bulk3.gr, bulk4.gr, bulk5.gr, bulk6.gr, bulk7.gr, bulk8.gr, bulk9.gr, bulk10.gr), function(gr) {
-  tmp <- as.data.frame(gr)
-  }) %>% bind_rows() %>% arrange(seqnames, start)
-
-rptec.compile.df <- lapply(list(rptec1.gr, rptec2.gr, rptec3.gr, rptec4.gr, rptec5.gr, rptec6.gr, rptec7.gr, rptec8.gr, rptec9.gr, rptec10.gr), function(gr) {
-  tmp <- as.data.frame(gr)
-  }) %>% bind_rows() %>% arrange(seqnames, start)
-
-# compile all dmr
+# ST19 ALL_DMR
 dmr.compile.df <- lapply(list(dmr38_1.gr, dmr38_2.gr, dmr38_3.gr, dmr38_4.gr, dmr38_5.gr, dmr38_6.gr, dmr38_7.gr,
                                     dmr38_8.gr, dmr38_9.gr, dmr38_10.gr), function(gr) {
   tmp <- as.data.frame(gr)
   }) %>% bind_rows() %>% arrange(seqnames, start)
+
+# ST19 DAR_DKD_VS_CONTROL
+dar.compile.df <- lapply(list(over1.gr, over2.gr, over3.gr, over4.gr, over5.gr, over6.gr, over7.gr, over8.gr, over9.gr, over10.gr), function(gr) {
+  tmp <- as.data.frame(gr)
+  }) %>% bind_rows() %>% arrange(seqnames, start)
+
+# ST19 Bulk_GR_CUT_AND_RUN
+bulk.compile.df <- lapply(list(bulk1.gr, bulk2.gr, bulk3.gr, bulk4.gr, bulk5.gr, bulk6.gr, bulk7.gr, bulk8.gr, bulk9.gr, bulk10.gr), function(gr) {
+  tmp <- as.data.frame(gr)
+  }) %>% bind_rows() %>% arrange(seqnames, start)
+
+# ST19 hTERT_RPTEC_GR_CUT_AND_RUN
+rptec.compile.df <- lapply(list(rptec1.gr, rptec2.gr, rptec3.gr, rptec4.gr, rptec5.gr, rptec6.gr, rptec7.gr, rptec8.gr, rptec9.gr, rptec10.gr), function(gr) {
+  tmp <- as.data.frame(gr)
+  }) %>% bind_rows() %>% arrange(seqnames, start)
+
 
 # compile the flank results
 dar.compile.flank.df <- lapply(list(over1_flank.gr, over2_flank.gr, over3_flank.gr, over4_flank.gr, over5_flank.gr, over6_flank.gr, over7_flank.gr,
