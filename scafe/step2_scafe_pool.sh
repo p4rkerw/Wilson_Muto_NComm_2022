@@ -21,8 +21,8 @@
 # # to run interactive
 # bsub -Is -G compute-parkerw -R 'rusage[mem=128GB]' -q general-interactive -a 'docker(p4rkerw/scafe:latest)' /bin/bash
 
-bsub -G compute-parkerw -J "scafe_pool" -o "$SCRATCH1/log.scafe_pool" -R 'rusage[mem=128GB]' -q general -a 'docker(p4rkerw/scafe:latest)' \
-bash $SCRATCH1/dkd/scafe/scafe_pool.sh
+# bsub -G compute-parkerw -J "scafe_pool" -o "$SCRATCH1/log.scafe_pool" -R 'rusage[mem=128GB]' -q general -a 'docker(p4rkerw/scafe:latest)' \
+# bash $SCRATCH1/dkd/scafe/scafe_pool.sh
 
 export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/SCAFE/scripts:$PATH
 
