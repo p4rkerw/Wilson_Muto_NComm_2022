@@ -188,6 +188,8 @@ dar.gr <- StringToGRanges(dar.pct$peak)
 plot.gr <- StringToGRanges("chr20-57560110-57578121")
 dar.gr <- join_overlap_intersect(dar.gr, plot.gr)
 
+# no dmr intersect with this region
+
 # pck1 with 1k upstream and 10k downstream flank
 cp <- CoveragePlot(atacAggr, ident=c("PCT_0","PCT_1"), region = "chr20-57560110-57578121", peaks=TRUE, links=FALSE)
 ccan.plot <- LinkPlot(atacAggr, region="chr20-57560110-57578121", min.cutoff=0.4)
