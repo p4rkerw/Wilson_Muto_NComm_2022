@@ -1,5 +1,0 @@
-FROM timoast/signac:1.6.0
-
-RUN R -e "install.packages('here')"
-
-RUN R -e "remotes::install_github('immunogenomics/harmony')"
