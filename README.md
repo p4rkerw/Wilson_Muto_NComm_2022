@@ -3,7 +3,7 @@ __*Parker C. Wilson, *Yoshiharu Muto, Haojia Wu, Anil Karihaloo, Sushrut S. Waik
 *These authors contributed equally  
 
 This manuscript has been provisionally accepted at Nature Communications. In the meantime,
-please cite the bioRxiv preprint [manuscript](https://www.biorxiv.org/content/10.1101/2022.01.28.478204v1)
+please cite the [preprint](https://www.biorxiv.org/content/10.1101/2022.01.28.478204v1)
 ```
 Wilson PC, Muto Y, Wu H, Karihaloo A, Waikar SS, Humphreys BD.
 Multimodal single cell sequencing implicates chromatin accessibility and genetic background in diabetic kidney disease progression. 
