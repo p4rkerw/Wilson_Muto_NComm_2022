@@ -62,29 +62,6 @@ marker.genes <- c("SLC34A1","VCAM1", # PT and PT-VCAM1+ markers
                   "PTPRC") # Leukocytes
 
 ####################################################
-# volcano plot of PT degs
-# this file does not have a lfc threshold so all points can be displayed
-pt.deg <- read.xlsx(here("project","analysis","dkd","markers","deg.celltype.diab_vs_ctrl.xlsx"), sheet = "PT", rowNames=TRUE) %>%
-  rownames_to_column(var = "gene")
-pt.deg <- dplyr::filter(pt.deg, p_val_adj < 0.05) %>%
-  dplyr::mutate(color = ifelse(abs(avg_log2FC) > 0.25,1,0))
-
-# modify outliers with absolute LFC > 1.5 and set to 1.5
-# this will make volcano plot more narrow
-# approx three points meet this criteria
-pt.deg <- dplyr::mutate(pt.deg, update_log2FC = ifelse(avg_log2FC > 1.5, 1.5, avg_log2FC)) %>%
-  dplyr::mutate(update_log2FC = ifelse(avg_log2FC < -1.5, -1.5, avg_log2FC))
-
-pdf(here(figures, "figure2b.pdf"))
-ggplot(pt.deg, aes(x=update_log2FC, y=-log10(p_val_adj), color=color)) +
- geom_point() +
- theme_bw() +
- guides(color="none") +
- geom_vline(xintercept=0.25) +
- geom_vline(xintercept=-0.25)
-dev.off()
-
-####################################################
 # upset plot
 # read in degs
 file <- here("project","analysis","dkd","markers","deg.celltype.diab_vs_ctrl.xlsx")
@@ -125,7 +102,7 @@ p3 <- draw(UpSet(m1, set_order=names(deg.ls)))
 decorate_annotation("intersection_size", {
   grid.text(cs[od], x = seq_along(cs), y = unit(cs[od], "native") + unit(2, "pt"), 
             default.units = "native", just = "bottom", gp = gpar(fontsize = 8))
-}) # export as pdf 6x7" figure2c.pdf
+}) # export as pdf 6x7" 
 
 ######################################
 # panther pathways for proximal tubule deg
@@ -137,7 +114,7 @@ deg.df <- lapply(idents, function(ident){
     dplyr::filter(p_val_adj < 0.05) %>%
     dplyr::mutate(abs_log2FC = abs(avg_log2FC)) %>%
     dplyr::filter(abs_log2FC > 0.25) %>%
-    rownames_to_column(var = "peak")
+    rownames_to_column(var = "gene")
   df$celltype <- ident
   return(df)
 }) %>% bind_rows()
@@ -160,7 +137,7 @@ ggplot(panther, aes(x=order, y=`upload_1 (fold Enrichment)`, fill=color, color=c
   geom_bar(show.legend=FALSE,stat="identity") +
   ylab("Pathway fold enrichment") +
   xlab("GO Biological Process") +
-  theme_bw() # export 6x6" pdf figure2d.pdf
+  theme_bw() # export 6x6" pdf figure2b.pdf
 
 ######################################
 # read in aggregated snATAC object
