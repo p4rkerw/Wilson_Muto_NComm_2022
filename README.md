@@ -11,7 +11,7 @@ bioRxiv. 2022 Jan 1
 doi: https://doi.org/10.1101/2022.01.28.478204
 ```
 The code associated with this publication has been deposited in Zenodo 
-<a href="https://doi.org/10.5281/zenodo.4555693"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.4555693.svg" alt="DOI"></a>
+<a href="https://zenodo.org/account/settings/github/repository/p4rkerw/Wilson_Muto_NComm_2022"><img src="https://zenodo.org/badge/451634843.svg" alt="DOI"></a>
 
 The bioRxiv preprint can be found [here](https://www.biorxiv.org/content/10.1101/2022.01.28.478204v1)
 
