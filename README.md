@@ -27,7 +27,7 @@ https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE151302 <br/>
 https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE131882 <br/>
 https://data.humancellatlas.org/explore/projects/2af52a13-65cb-4973-b513-39be38f2df3f
 
-[snATAC barcodes](https://github.com/p4rkerw/Wilson_Muto_NComm_2020/blob/master/barcodes/atac_barcodes.csv) and [snRNA barcodes](https://github.com/p4rkerw/Muto_Wilson_NComm_2020/blob/master/barcodes/rna_barcodes.csv) used for the analysis can be found in this github repository
+[snATAC barcodes](https://github.com/p4rkerw/Wilson_Muto_NComm_2022/blob/main/barcodes/atac_barcodes.csv) and [snRNA barcodes](https://github.com/p4rkerw/Wilson_Muto_NComm_2022/blob/main/barcodes/rna_barcodes.csv) used for the analysis can be found in this github repository
 
 
 Welcome to our GitHub repository!  
