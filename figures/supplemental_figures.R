@@ -290,13 +290,39 @@ res <- lapply(1:nrow(pairwise), function(row) {
   return(cbind(mark, control = control, dkd = dkd))
   }) %>% bind_rows()
 
-# create a geom tile plot indicating which pairwise comparisons were significant and which direction the change was in
+# create a geom tile plot indicating which pairwise comparisons were significant (red text) and which direction the change was in (blue fill decreased)
+p1 <- res %>%
+  dplyr::mutate(fill = ifelse(avg_log2FC < 0, 1, 0)) %>%
+  dplyr::mutate(textcolor = ifelse(p_val_adj < 0.05, "red", "black")) %>%
+  dplyr::mutate(label = round(avg_log2FC, 2)) %>%
+  ggplot(aes(x=control, y=dkd, fill=fill, label=label)) + 
+    geom_tile() +
+    geom_text(aes(label=label, color=textcolor)) +
+    scale_color_manual(values = c('black','red')) +
+    scale_fill_gradient(low = "white",high = "lightblue") +
+    xlab("") +
+    ylab("") +
+    ggtitle(paste0("A) Pairwise comparison for INSR region: ", region),
+            subtitle = "Blue Fill = Decreased accessibility, Red Text = padj < 0.05") +
+    NoLegend()
 
+pt <- subset(rnaAggr, celltype %in% c("PT","PTVCAM1"))
+exp <- AverageExpression(pt, features = "INSR", group.by = "orig.ident")$SCT %>%
+  as.data.frame() 
+exp <- exp %>%
+  pivot_longer(cols = colnames(exp))
+p2 <- exp %>%
+  ggplot(aes(x = name, y = value, color = name, fill = name)) + 
+  geom_bar(stat = "identity") +
+  NoLegend() +
+  ggtitle("B) Average INSR expression in proximal tubule") +
+  xlab("") +
+  ylab("Average INSR expression") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
 
-
-
-
-
+pdf(here(figures, "sfigure_INSR.pdf"), width = 6, height = 10)
+grid.arrange(p1, p2)
+dev.off()
 
 #############################################
 # ALDOB
