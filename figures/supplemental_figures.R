@@ -152,7 +152,7 @@ p2 <- df %>%
   geom_bar(stat = "identity") +
   xlab("") +
   ylab("Proportion PT_VCAM1") +
-  ggtitle("A) snATAC-seq") + 
+  ggtitle("B) snATAC-seq") + 
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), legend.position = "none")
 
 library(gridExtra)
