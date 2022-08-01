@@ -114,6 +114,54 @@ pdf(here(figures,"sfigure3.pdf"), width=10, height=6)
 print(p1)
 dev.off()
 #################################################################
+# supplemental figure PT_VCAM1 proportion by donor in snRNA-seq and snATAC-seq
+rnaAggr <- readRDS(here("project","analysis","dkd","rna_aggr_prep","step2_anno.rds"))
+df <- rnaAggr@meta.data %>%
+  dplyr::select(orig.ident, celltype) %>%
+  group_by(orig.ident) %>%
+  dplyr::mutate(total_cells = n()) %>%
+  group_by(orig.ident, celltype) %>%
+  dplyr::mutate(total_celltype = n()) %>%
+  dplyr::mutate(prop_celltype = total_celltype / total_cells) %>%
+  distinct(orig.ident, celltype, prop_celltype) %>%
+  dplyr::filter(celltype == "PTVCAM1") %>%
+  arrange(orig.ident)
+
+p1 <- df %>%
+  ggplot(aes(x=orig.ident, y=prop_celltype, fill=orig.ident)) +
+  geom_bar(stat = "identity") +
+  xlab("") +
+  ylab("Proportion PT_VCAM1") +
+  ggtitle("A) snRNA-seq") + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), legend.position = "none")
+
+atacAggr <- readRDS(here("project","analysis","dkd","atac_aggr_prep","step5_chromVAR.rds"))
+df <- atacAggr@meta.data %>%
+  dplyr::select(orig.ident, celltype) %>%
+  group_by(orig.ident) %>%
+  dplyr::mutate(total_cells = n()) %>%
+  group_by(orig.ident, celltype) %>%
+  dplyr::mutate(total_celltype = n()) %>%
+  dplyr::mutate(prop_celltype = total_celltype / total_cells) %>%
+  distinct(orig.ident, celltype, prop_celltype) %>%
+  dplyr::filter(celltype == "PT_VCAM1") %>%
+  arrange(orig.ident)
+
+p2 <- df %>%
+  ggplot(aes(x=orig.ident, y=prop_celltype, fill=orig.ident)) +
+  geom_bar(stat = "identity") +
+  xlab("") +
+  ylab("Proportion PT_VCAM1") +
+  ggtitle("A) snATAC-seq") + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), legend.position = "none")
+
+library(gridExtra)
+pdf(here(figures,"sfigure4.pdf"), width=6, height=10)
+grid.arrange(p1,p2)
+dev.off()
+
+
+###########################################
 # draw ATP1B1 gene model peak coverage
 # edit afterwards in inskcape / adobe illustrator etc.
 library(Signac)
