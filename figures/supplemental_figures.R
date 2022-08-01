@@ -159,8 +159,6 @@ library(gridExtra)
 pdf(here(figures,"sfigure4.pdf"), width=6, height=10)
 grid.arrange(p1,p2)
 dev.off()
-
-
 ###########################################
 # draw ATP1B1 gene model peak coverage
 # edit afterwards in inskcape / adobe illustrator etc.
@@ -257,6 +255,49 @@ plot <- CombineTracks(list(cp,dar.plot, gr.plot, ccan.plot))
 pdf(here(figures, "sfigure_TAL2_ATP1B1.pdf"))
 print(plot)
 dev.off()
+#############################################
+# pairwise comparison of INSR DAR between control and DKD snATAC-seq donors
+figures <- here("project","analysis","dkd","figures")
+atac_aggr_prep <- here("project","analysis","dkd","atac_aggr_prep")
+atacAggr <- readRDS(here(atac_aggr_prep,"step6_ccan.rds"))
+DefaultAssay(atacAggr) <- "peaks"
+
+# create lists of control and dkd donors
+library_ids <- unique(atacAggr@meta.data$orig.ident)
+controls <- library_ids[grepl("Control", library_ids)] %>% sort()
+dkd <- library_ids[grepl("DN", library_ids)] %>% sort()
+
+# create a df of unique pairwise combos
+pairwise <- expand.grid(controls, dkd)
+
+# extract PCT barcodes from metadata
+pct <- atacAggr@meta.data %>%
+  dplyr::filter(celltype == "PCT") %>%
+  dplyr::select(barcode, orig.ident)
+
+# INSR DAR region
+region <- "chr19-7196798-7198626"
+
+# compare each combo for the INSR DAR
+res <- lapply(1:nrow(pairwise), function(row) {
+  control <- pairwise[row, 1]
+  control_cells <- pct[pct$orig.ident == control,]$barcode
+  
+  dkd <- pairwise[row, 2]
+  dkd_cells <- pct[pct$orig.ident == dkd,]$barcode
+  
+  mark <- FindMarkers(atacAggr, ident.2 = control_cells, ident.1 = dkd_cells, logfc.threshold = 0, features = region)
+  return(cbind(mark, control = control, dkd = dkd))
+  }) %>% bind_rows()
+
+# create a geom tile plot indicating which pairwise comparisons were significant and which direction the change was in
+
+
+
+
+
+
+
 #############################################
 # ALDOB
 file <- here("project","analysis","dkd","markers","dar.macs2.celltype.diab_vs_ctrl.xlsx")
