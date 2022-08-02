@@ -6,7 +6,7 @@ This manuscript has been provisionally accepted at Nature Communications. In the
 please cite the [preprint](https://www.biorxiv.org/content/10.1101/2022.01.28.478204v1)
 ```
 Wilson PC, Muto Y, Wu H, Karihaloo A, Waikar SS, Humphreys BD.
-Multimodal single cell sequencing implicates chromatin accessibility and genetic background in diabetic kidney disease progression. 
+Multimodal single cell sequencing of human diabetic kidney disease implicates chromatin accessibility and genetic background in disease progression
 bioRxiv. 2022 Jan 1
 doi: https://doi.org/10.1101/2022.01.28.478204
 ```
