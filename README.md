@@ -15,13 +15,13 @@ The code associated with this publication has been deposited in Zenodo
 
 The bioRxiv preprint can be found [here](https://www.biorxiv.org/content/10.1101/2022.01.28.478204v1)
 
-Newly-generated raw fastq files in this manuscript (snRNA-seq: 1 control, 2 DKD; snATAC-seq: 1 control, 7 DKD) and cellranger v4.0 / cellranger-atac v2.0 gene and peak count matrices for all samples (snRNA-seq: 6 control, 5 DKD; snATAC-seq: 6 control, 7 DKD) can be found in GEO. </br>
+Single cell sequencing data generated for this manuscript (snRNA-seq: 1 control, 2 DKD; snATAC-seq: 1 control, 7 DKD) and cellranger v4.0 / cellranger-atac v2.0 gene and peak count matrices for all analyzed samples (snRNA-seq: 6 control, 5 DKD; snATAC-seq: 6 control, 7 DKD) can be found in GEO. </br>
 https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE195460
 
 CUT&RUN and bulk ATAC data generated for this manuscript can be found in a second repository: </br>
 https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE195443
 
-Previously-generated kidney snATAC (5 control) and snRNA libraries (5 control, 3 DKD) were prepared for prior studies and raw fastq can be found at the links below:
+Sequencing data generated for previously-published kidney snATAC (5 control) and snRNA libraries (5 control, 3 DKD) can be found at the links below:
 Note that there are two different sequencing configurations for the snATAC libraries. Samples 1-3 have an I1 index file, whereas samples 4-5 do not. The I1 index files are not needed to run cellranger-atac count on samples 4-5. Index sequences used for demultplexing are printed in the header lines of R1 and R2. R1 and R3 contain the paired-end reads and R2 contains the cell barcode information.  <br/>
 https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE151302 <br/>
 https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE131882 <br/>
