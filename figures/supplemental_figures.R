@@ -92,12 +92,18 @@ features <- c("SLC34A1","LRP2","SLC5A1","SLC5A2","HAVCR1","PROM1",
               "PIEZO2","COL1A2","PTPRC","CD3E","MS4A1","CSF1R")
 p1 <- DotPlot(atacAggr, assay="RNA", features = features, cols = c("lightyellow","royalblue")) +
   RotatedAxis() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) #820x600
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  xlab("") +
+  ylab("") +
+  ggtitle("A) snATAC-seq Gene Activity")
 p2 <- DotPlot(atacAggr, assay="IMPRNA", features = features, cols = c("lightyellow","royalblue")) +
   RotatedAxis() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) #820x600
-pdf(here(figures,"sfigure2.pdf"), width=10, height=6)
-list(p1,p2)
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  xlab("") +
+  ylab("") +
+  ggtitle("B) snATAC-seq Imputed RNA Expression")
+pdf(here(figures,"sfigure3.pdf"), width=10, height=10)
+grid.arrange(p1,p2)
 dev.off()
 ###########################################################3
 # supplemental figure dotplot of rnaAggr gene expression
@@ -110,7 +116,7 @@ features <- c("SLC34A1","LRP2","SLC5A1","SLC5A2","HAVCR1",
 p1 <- DotPlot(rnaAggr, assay="SCT", features = features, cols = c("lightyellow","royalblue")) +
   RotatedAxis() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) #820x600
-pdf(here(figures,"sfigure3.pdf"), width=10, height=6)
+pdf(here(figures,"sfigure8.pdf"), width=10, height=6)
 print(p1)
 dev.off()
 #################################################################
@@ -462,4 +468,34 @@ pdf(here(figures, "sfigure_FBP1.pdf"))
 print(plot)
 dev.off()
 
+###################
+# draw atacqc plots
+p1 <- VlnPlot(atacAggr, features = "reads_count", group.by="orig.ident", pt.size = 0) +
+  ggtitle("A) snATAC-seq total reads per cell") +
+  xlab("")
+p2 <- VlnPlot(atacAggr, features = "peak_region_fragments", group.by = "orig.ident", pt.size = 0) + 
+  ggtitle("B) snATAC-seq peak region fragments per cell") +
+  xlab("")
+# p3 see snATAC_prep step1_amulet.pdf
+p4 <- DimPlot(atacAggr, split.by = "orig.ident", ncol = 6) + 
+  ggtitle("D) snATAC-seq Sample Integration")
+pdf(here(figures, "sfig12.pdf"), width=15, height=10)
+grid.arrange(p1,p2,p4, ncol = 2)
+dev.off()
+
+############
+# draw rnaqc plots
+p1 <- VlnPlot(rnaAggr, features = "nCount_RNA", group.by="orig.ident", pt.size = 0) +
+  ggtitle("A) snRNA-seq number RNA counts per cell") +
+  xlab("")
+p2 <- VlnPlot(rnaAggr, features = "nFeature_RNA", group.by = "orig.ident", pt.size = 0) + 
+  ggtitle("B) snRNA-seq number features per cell") +
+  xlab("")
+# p3 see snRNA_prep step1_doublets.pdf
+p4 <- DimPlot(rnaAggr, split.by = "orig.ident", ncol = 6) + 
+  ggtitle("D) snRNA-seq Sample Integration")
+# p5, p6 see snRNA_prep step3 soupx_clusters.pdf
+pdf(here(figures, "sfig13.pdf"), width = 20, height = 10)
+grid.arrange(p1,p2,p4, ncol = 2)
+dev.off()
 
