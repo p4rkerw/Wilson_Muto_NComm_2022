@@ -29,6 +29,8 @@ https://data.humancellatlas.org/explore/projects/2af52a13-65cb-4973-b513-39be38f
 
 [snATAC barcodes](https://github.com/p4rkerw/Wilson_Muto_NComm_2022/blob/main/barcodes/atac_barcodes.csv) and [snRNA barcodes](https://github.com/p4rkerw/Wilson_Muto_NComm_2022/blob/main/barcodes/rna_barcodes.csv) used for the analysis can be found in this github repository
 
+Finalized R objects can be visualized interactively or downloaded from the cellxgene [website](https://cellxgene.cziscience.com/collections/b3e2c6e3-9b05-4da9-8f42-da38a664b45b). The snATAC object only includes the gene activity "RNA" assay and does not have a raw or normalized peak count matrix.
+
 
 Welcome to our GitHub repository!  
 Here you will find analysis scripts for our manuscript where we compare control kidney to diabetic kidney disease (DKD) samples using paired snRNAseq and snATACseq. Please contact the corresponding author, Dr. Benjamin Humphreys, with questions or comments.  
