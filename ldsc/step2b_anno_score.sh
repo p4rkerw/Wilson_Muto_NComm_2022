@@ -23,7 +23,7 @@
 
 # to run detached
 # bsub -G compute-parkerw -J "ldsc_${celltype}" -o "$SCRATCH1/log.ldsc_${celltype}" -R 'rusage[mem=32GB]' -q general -a 'docker(p4rkerw/ldsc:1.0)' \
-# bash $SCRATCH1/dkd/ldsc/step2b_anno_score.sh 
+# bash $SCRATCH1/Wilson_Muto_NComm_2022/ldsc/step2b_anno_score.sh 
 
 export PATH=$PATH:/opt/conda/envs/ldsc/bin:/opt/conda/condabin:/opt/conda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 source activate ldsc
