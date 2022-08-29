@@ -20,7 +20,7 @@
 # export LSF_DOCKER_VOLUMES="$HOME:$HOME \
 # $STORAGE1/diabneph:$HOME/project \
 # $SCRATCH1:$SCRATCH1"
-# bsub -G compute-parkerw -R 'rusage[mem=256GB]' -n 10 -q general -a 'docker(p4rkerw/sctools:R4.1.0)' -o $SCRATCH1/log.find_deg.out Rscript $SCRATCH1/dkd/analysis/find_deg.R
+# bsub -G compute-parkerw -R 'rusage[mem=256GB]' -n 10 -q general -a 'docker(p4rkerw/sctools:R4.1.0)' -o $SCRATCH1/log.find_deg.out Rscript $SCRATCH1/Wilson_Muto_NComm_2022/analysis/find_deg.R
 
 library(Seurat) 
 library(EnsDb.Hsapiens.v86)
