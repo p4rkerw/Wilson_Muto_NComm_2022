@@ -30,7 +30,7 @@
 # seurat_celltypes=(merge ATL DCT1 DCT2 ENDO ICA ICB BCELL TCELL FIB_VSMC_MC MONO PC PCT PEC PODO PST PT_VCAM1 PT_PROM1 PT_CD36 TAL1 TAL2)
 # for seurat_celltype in ${seurat_celltypes[@]}; do
 # bsub -G compute-parkerw -J "ldsc_${seurat_celltype}" -o "$SCRATCH1/log.ldsc_${seurat_celltype}" -R 'rusage[mem=64GB]' -q general -a 'docker(p4rkerw/ldsc:latest)' \
-# bash $SCRATCH1/dkd/ldsc/step2a_anno_score.sh $seurat_celltype
+# bash $SCRATCH1/Wilson_Muto_NComm_2022/ldsc/step2a_anno_score.sh $seurat_celltype
 # done
 
 ############################
