@@ -20,7 +20,7 @@
 # export LSF_DOCKER_VOLUMES="$HOME:$HOME \
 # $STORAGE1/diabneph:$HOME/project \
 # $SCRATCH1:$SCRATCH1"
-# bsub -G compute-parkerw -R 'rusage[mem=128GB]' -q general -a 'docker(p4rkerw/sctools:R4.1.0)' -o $SCRATCH1/log.scafe_prep4.out Rscript $SCRATCH1/dkd/scafe/scafe_prep4.R
+# bsub -G compute-parkerw -R 'rusage[mem=128GB]' -q general -a 'docker(p4rkerw/sctools:R4.1.0)' -o $SCRATCH1/log.scafe_prep4.out Rscript $SCRATCH1/Wilson_Muto_NComm_2022/scafe/scafe_prep4.R
 
 
 library(Seurat) # 4.0.3
