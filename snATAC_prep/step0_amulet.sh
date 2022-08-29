@@ -28,7 +28,7 @@
 # library_ids=(Control_1 Control_2 Control_3 Control_4 Control_5 Control_6 DN_1 DN_2 DN_3 DN_4 DN_5 DN_6 DN_7)
 # for library_id in ${library_ids[*]}
 # do
-# bsub -Is -G compute-parkerw -R 'rusage[mem=64GB]' -q general-interactive -a 'docker(p4rkerw/amulet:1.0)' $SCRATCH1/dkd/snATAC_prep/step0_amulet.sh $library_id
+# bsub -Is -G compute-parkerw -R 'rusage[mem=64GB]' -q general-interactive -a 'docker(p4rkerw/amulet:1.0)' $SCRATCH1/Wilson_Muto_NComm_2022/snATAC_prep/step0_amulet.sh $library_id
 # done
 
 # update path o/w LSF environ wont see correct python version
