@@ -22,7 +22,7 @@
 
 # to run detached
 # bsub -G compute-parkerw -J "partition" -o "$SCRATCH1/log.partition" -R 'rusage[mem=32GB]' -q general -a 'docker(p4rkerw/ldsc:latest)' \
-# bash $SCRATCH1/dkd/ldsc/step3_partition.sh
+# bash $SCRATCH1/Wilson_Muto_NComm_2022/ldsc/step3_partition.sh
 
 export PATH=$PATH:/opt/conda/envs/ldsc/bin:/opt/conda/condabin:/opt/conda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 source activate ldsc
