@@ -3,15 +3,15 @@
 
 # run detached:
 # export LSF_DOCKER_VOLUMES="$HOME:$HOME \
-# $HOME/diabeticKidney/cellranger:$HOME/github_repository \
+# $HOME/Wilson_Muto_NComm_2022/cellranger:$HOME/github_repository \
 # $STORAGE1/diabneph/cellranger_rna_counts:$HOME/rna_counts \
 # $STORAGE1/diabneph/analysis/combined_adv:$HOME/outs \
 # $SCRATCH1:$SCRATCH1"
-# bsub -G compute-parkerw -R 'rusage[mem=128GB]' -q general -o log.out -a 'docker(p4rkerw/cellranger:4.0)' bash diabeticKidney/cellranger/cellranger_aggr_4.0.sh 
+# bsub -G compute-parkerw -R 'rusage[mem=128GB]' -q general -o log.out -a 'docker(p4rkerw/cellranger:4.0)' bash Wilson_Muto_NComm_2022/cellranger/cellranger_rna_aggr.sh 
 
 # to run interactive:
 # export LSF_DOCKER_VOLUMES="$HOME:$HOME \
-# $HOME/diabeticKidney/cellranger:$HOME/github_repository \
+# $HOME/Wilson_Muto_NComm_2022/cellranger:$HOME/github_repository \
 # $STORAGE1/diabneph/cellranger_rna_counts/version_4.0:$HOME/rna_counts \
 # $STORAGE1/diabneph/analysis/combined_adv:$HOME/outs \
 # $SCRATCH1:$SCRATCH1"
