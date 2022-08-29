@@ -20,7 +20,7 @@
 # export LSF_DOCKER_VOLUMES="$HOME:$HOME \
 # $STORAGE1/diabneph:$HOME/project \
 # $SCRATCH1:$SCRATCH1"
-# bsub -G compute-parkerw -R 'rusage[mem=256GB]' -q general -a 'docker(p4rkerw/sctools:R4.1.0)' -o $SCRATCH1/log.find_gene_enh.out Rscript $SCRATCH1/dkd/analysis/find_gene_enh.R
+# bsub -G compute-parkerw -R 'rusage[mem=256GB]' -q general -a 'docker(p4rkerw/sctools:R4.1.0)' -o $SCRATCH1/log.find_gene_enh.out Rscript $SCRATCH1/Wilson_Muto_NComm_2022/analysis/find_gene_enh.R
 
 library(openxlsx) # 4.1.4
 library(Signac) # 1.3.0
