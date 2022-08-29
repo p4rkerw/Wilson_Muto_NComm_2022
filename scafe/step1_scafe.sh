@@ -25,7 +25,7 @@
 # for library_id in ${library_ids[*]}
 # do
 # bsub -G compute-parkerw -J "scafe_${library_id}" -o "$SCRATCH1/log.scafe_${library_id}" -R 'rusage[mem=128GB]' -q general -a 'docker(p4rkerw/scafe:latest)' \
-# bash $SCRATCH1/dkd/scafe/scafe.sh $library_id
+# bash $SCRATCH1/Wilson_Muto_NComm_2022/scafe/scafe.sh $library_id
 # done
 
 export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/SCAFE/scripts:$PATH
