@@ -20,7 +20,7 @@
 # export LSF_DOCKER_VOLUMES="$HOME:$HOME \
 # $STORAGE1/diabneph:$HOME/project \
 # $SCRATCH1:$SCRATCH1"
-# bsub -G compute-parkerw -R 'rusage[mem=128GB]' -q general -a 'docker(p4rkerw/sctools:R4.1.0)' -o $SCRATCH1/log_step2.out Rscript $SCRATCH1/dkd/snATAC_prep/step2_call_m2peaks.R
+# bsub -G compute-parkerw -R 'rusage[mem=128GB]' -q general -a 'docker(p4rkerw/sctools:R4.1.0)' -o $SCRATCH1/log_step2.out Rscript $SCRATCH1/Wilson_Muto_NComm_2022/snATAC_prep/step2_call_m2peaks.R
 
 library(Signac) # 1.3.0
 library(Seurat) # 4.0.3
