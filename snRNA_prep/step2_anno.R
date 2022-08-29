@@ -22,7 +22,7 @@
 # export LSF_DOCKER_VOLUMES="$HOME:$HOME \
 # $STORAGE1/diabneph:$HOME/project \
 # $SCRATCH1:$SCRATCH1"
-# bsub -G compute-parkerw -R 'rusage[mem=128GB]' -q general -a 'docker(p4rkerw/sctools:R4.1.0)' -o $SCRATCH1/log.rna.step2.out Rscript $SCRATCH1/dkd/snRNA_prep/step2_anno.R
+# bsub -G compute-parkerw -R 'rusage[mem=128GB]' -q general -a 'docker(p4rkerw/sctools:R4.1.0)' -o $SCRATCH1/log.rna.step2.out Rscript $SCRATCH1/Wilson_Muto_NComm_2022/snRNA_prep/step2_anno.R
 
 library(Seurat) # 4.0.3
 library(ggplot2) # 3.3.5
