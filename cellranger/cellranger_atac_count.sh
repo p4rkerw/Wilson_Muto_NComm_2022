@@ -28,7 +28,7 @@ ln -s $SCRATCH1 scratch1
 cd scratch1
 
 # clone the github repo
-# git clone https://github.com/p4rkerw/dkd
+# git clone https://github.com/p4rkerw/Wilson_Muto_NComm_2022
 
 # download reference if not present in $SCRATCH1
 ref=refdata-cellranger-arc-GRCh38-2020-A-2.0.0.tar.gz
