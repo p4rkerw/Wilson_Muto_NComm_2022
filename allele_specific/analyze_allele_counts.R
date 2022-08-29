@@ -9,7 +9,7 @@
 # $STORAGE1/diabneph:$HOME/project \
 # $SCRATCH1:$SCRATCH1"
 # bsub -G compute-parkerw -n 10 -J "allele_mods" -o "$SCRATCH1/log.allele_mods" -R 'rusage[mem=128GB]' -q general -a 'docker(p4rkerw/sctools:R4.1.0)' \
-# Rscript $SCRATCH1/dkd/allele_specific/analyze_allele_counts.R
+# Rscript $SCRATCH1/Wilson_Muto_NComm_2022/allele_specific/analyze_allele_counts.R
 
 # RUN LOCAL INTERACTIVE R terminal
 # SCRATCH1=/mnt/g/scratch
