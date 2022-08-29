@@ -26,13 +26,13 @@
 # export LSF_DOCKER_VOLUMES="$HOME:$HOME \
 # $STORAGE1/diabneph/cellranger_atac_counts/version_2.0:$HOME/atac_counts \
 # $SCRATCH1:$SCRATCH1"
-# bsub -G compute-parkerw -R 'rusage[mem=128GB]' -q general -a 'docker(p4rkerw/cellranger-atac:2.0)' bash $SCRATCH1/dkd/cellranger/cellranger_atac_aggr.sh
+# bsub -G compute-parkerw -R 'rusage[mem=128GB]' -q general -a 'docker(p4rkerw/cellranger-atac:2.0)' bash $SCRATCH1/Wilson_Muto_NComm_2022/cellranger/cellranger_atac_aggr.sh
 
 ln -s $SCRATCH1 scratch1
 cd scratch1
 
 # clone the github repo
-# git clone https://github.com/p4rkerw/dkd
+# git clone https://github.com/p4rkerw/Wilson_Muto_NComm_2022
 
 # download reference if not present in $SCRATCH1
 ref=refdata-cellranger-arc-GRCh38-2020-A-2.0.0
