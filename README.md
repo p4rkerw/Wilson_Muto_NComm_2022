@@ -10,7 +10,11 @@ Multimodal single cell sequencing of human diabetic kidney disease implicates ch
 bioRxiv. 2022 Jan 1
 doi: https://doi.org/10.1101/2022.01.28.478204
 ```
-The code associated with this publication has been deposited in Zenodo 
+The code associated with this publication has been deposited in Zenodo
+[![DOI](https://zenodo.org/badge/451634843.svg)](https://zenodo.org/badge/latestdoi/451634843)
+
+
+
 <a href="https://zenodo.org/account/settings/github/repository/p4rkerw/Wilson_Muto_NComm_2022"><img src="https://zenodo.org/badge/451634843.svg" alt="DOI"></a>
 
 The bioRxiv preprint can be found [here](https://www.biorxiv.org/content/10.1101/2022.01.28.478204v1)
