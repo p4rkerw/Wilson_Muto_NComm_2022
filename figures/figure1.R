@@ -65,7 +65,7 @@ marker.genes <- c("SLC34A1","SLC5A1","SLC5A2","VCAM1", # PT and PT-VCAM1+ marker
                   "PTPRC","CD3E","MS4A1", # Lymphocytes
                   "FCGR3A","CD14","CSF1R") # Monocyte / Macrophage
 # update levels
-levels(atacAggr) <- rev(c("PCT","PST","PT_VCAM1","PT_CD36","PEC",
+levels(atacAggr) <- rev(c("PCT","PST","PT_VCAM1","PT_PROM1","PT_CD36","PEC",
   "ATL","TAL1","TAL2","DCT1","DCT2",
   "PC","ICA","ICB","PODO","ENDO",
   "FIB_VSMC_MC","TCELL","BCELL","MONO"))
