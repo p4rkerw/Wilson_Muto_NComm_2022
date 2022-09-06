@@ -5,9 +5,9 @@ __*Parker C. Wilson, *Yoshiharu Muto, Haojia Wu, Anil Karihaloo, Sushrut S. Waik
 This manuscript has been published in Nature Communications [link](https://www.nature.com/articles/s41467-022-32972-z)
 ```
 Wilson PC, Muto Y, Wu H, Karihaloo A, Waikar SS, Humphreys BD.
-Multimodal single cell sequencing of human diabetic kidney disease implicates chromatin accessibility and genetic background in disease progression
-bioRxiv. 2022 Jan 1
-doi: https://doi.org/10.1101/2022.01.28.478204
+Multimodal single cell sequencing implicates chromatin accessibility and genetic background in diabetic kidney disease progression
+Nat Commun 13, 5253 (2022). 
+https://doi.org/10.1038/s41467-022-32972-z
 ```
 The code associated with this publication has been deposited in [Zenodo](https://zenodo.org/badge/latestdoi/451634843)
 
