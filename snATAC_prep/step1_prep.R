@@ -3,7 +3,6 @@
 # counted and aggregated by cellranger-atac v2.0 without library normalization
 #
 # to run locally
-# NOTE: Read10X_h5 is broken in wsl2/docker
 # SCRATCH1=/mnt/g/scratch
 # docker run -it \
 # --workdir $HOME \
