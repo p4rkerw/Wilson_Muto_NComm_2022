@@ -107,7 +107,7 @@ find_atac_dar.R
 
 **Allele-specific workflow**
 
-1. Use SALSA to genotype, phase, correct for mapping bias, and generate single cell allele-specific counts for all libraries with both snRNA and snATAC (6 control, 5 DKD) - (allele_specific/run_salsa.sh)
+1. Use 🌶️[SALSA](https://github.com/p4rkerw/SALSA) to genotype, phase, correct for mapping bias, and generate single cell allele-specific counts for all libraries with both snRNA and snATAC (6 control, 5 DKD) - (allele_specific/run_salsa.sh)
 
 2. Generate an allele-specific count matrix for each predicted peak-gene combination (allele_specific/analyze_allele_counts.R)
 
