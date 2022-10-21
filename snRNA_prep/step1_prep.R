@@ -15,14 +15,14 @@
 # export LSF_DOCKER_VOLUMES="$HOME:$HOME \
 # $STORAGE1/diabneph:$HOME/project \
 # $SCRATCH1:$SCRATCH1"
-# bsub -Is -G compute-parkerw -R 'rusage[mem=128GB]' -q general-interactive -a 'docker(p4rkerw/sctools:R4.1.0)' /bin/bash
+# bsub -Is -G compute-parkerw -R 'rusage[mem=256GB]' -q general-interactive -a 'docker(p4rkerw/sctools:R4.1.0)' /bin/bash
 
 # to run detached:
 # git clone https://github.com/p4rkerw/dkd $SCRATCH1/dkd
 # export LSF_DOCKER_VOLUMES="$HOME:$HOME \
 # $STORAGE1/diabneph:$HOME/project \
 # $SCRATCH1:$SCRATCH1"
-# bsub -G compute-parkerw -R 'rusage[mem=128GB]' -q general -a 'docker(p4rkerw/sctools:R4.1.0)' -o $SCRATCH1/log_step1.out Rscript $SCRATCH1/Wilson_Muto_NComm_2022/snRNA_prep/step1_prep.R
+# bsub -G compute-parkerw -R 'rusage[mem=256GB]' -q general -a 'docker(p4rkerw/sctools:R4.1.0)' -o $SCRATCH1/log_step1.out Rscript $SCRATCH1/Wilson_Muto_NComm_2022/snRNA_prep/step1_prep.R
 
 library(Seurat) # 4.0.3
 library(ggplot2) # 3.3.5
@@ -174,11 +174,16 @@ dev.off()
 Idents(rnaAggr) <- "doublet_id"
 rnaAggr <- subset(rnaAggr, idents = "Singlet")
 
+# remove unused metadata columns
+meta <- rnaAggr@meta.data %>%
+  dplyr::select(-doublet_id, -doublet_viz)
+rnaAggr@meta.data <- meta
+
 # Regress out the mitochondrial reads and nCount_RNA
 rnaAggr <- SCTransform(rnaAggr, vars.to.regress = c("percent.mt","percent.rpl", "percent.rps","nCount_RNA"), verbose = TRUE)
 rnaAggr <- RunPCA(rnaAggr, verbose = TRUE)
 # ElbowPlot(rnaAggr, ndims = 50) # to determine number of dimensions for clustering
-rnaAggr <- RunHarmony(rnaAggr, "orig.ident", plot_convergence = TRUE, assay.use="SCT")
+rnaAggr <- RunHarmony(rnaAggr, "library_id", plot_convergence = TRUE, assay.use="SCT")
 rnaAggr <- FindNeighbors(rnaAggr, dims = 1:24, verbose = TRUE, reduction = "harmony")
 rnaAggr <- FindClusters(rnaAggr, verbose = TRUE, resolution = 0.8, future.seed=TRUE)
 rnaAggr <- RunUMAP(rnaAggr, dims = 1:24, verbose = TRUE, reduction = "harmony")
