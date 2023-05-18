@@ -61,7 +61,7 @@ Find us on Docker Hub:
 1. Align and count each snRNA library (cellranger/cellranger_rna_count.sh)
 Libraries were generated from a nuclear dissociation and aligned to refdata-gex-GRCh38-2020-A, which can be downloaded from the 10X genomics website: https://support.10xgenomics.com/.
 
-2. Aggregate the six snRNA libraries using the cellranger/rna_aggr.csv file (cellranger/cellranger_rna_aggr.sh)
+2. Aggregate the snRNA libraries using the cellranger/rna_aggr.csv file (cellranger/cellranger_rna_aggr.sh)
 
 3. Run standard Seurat QC on the aggregated snRNA data and eliminate doublet barcodes identified by DoubletFinder (snRNA_prep/step1_prep.R)
 
