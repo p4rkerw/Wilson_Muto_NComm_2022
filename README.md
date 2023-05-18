@@ -73,7 +73,7 @@ Libraries were generated from a nuclear dissociation and aligned to refdata-gex-
 1. Align and count each ATAC library (cellranger/cellranger_atac_count.sh)  
 Libraries were generated from a nuclear dissociation and aligned to refdata-cellranger-arc-A-2.0.0 which can be downloaded from the 10X genomics website: https://support.10xgenomics.com/. 
 
-2. Aggregate the seven snATAC libraries using the cellranger/atac_aggr.csv file (cellranger/cellranger_atac_aggr.sh)
+2. Aggregate the snATAC libraries using the cellranger/atac_aggr.csv file (cellranger/cellranger_atac_aggr.sh)
 
 3. Run AMULET on individual snATAC libraries to identify doublet barcodes (snATAC_prep/step0_amulet.sh)
 
